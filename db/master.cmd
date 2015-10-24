@@ -1,0 +1,1 @@
+liquibase --changeLogFile="changelog-master.xml" --username=root --password=secret update

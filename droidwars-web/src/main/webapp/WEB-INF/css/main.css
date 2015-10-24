@@ -1,0 +1,9 @@
+body {
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+
+a.navbar-brand,
+.navbar-nav > li > a {
+    cursor: pointer;
+}

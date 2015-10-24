@@ -1,0 +1,47 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'jetty'
+apply plugin: 'rebel'
+
+// JDK 7
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+httpPort = properties['jetty.httpPort'] as Integer
+stopPort = properties['jetty.stopPort'] as Integer
+
+[jettyRun, jettyRunWar].each {
+    it.contextPath = '/'
+}
+
+jettyRun.dependsOn(generateRebel)
+
+dependencies {
+    compile project(':droidwars-core')
+
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
+    compile "ch.qos.logback:logback-classic:$logbackVersion"
+
+    compile "javax.servlet:jstl:$jstlVersion"
+
+    compile "org.springframework:spring-web:$springVersion"
+    compile "org.springframework:spring-webmvc:$springVersion"
+
+    compile "org.webjars.bower:angularjs:$angularJsVersion"
+    compile "org.webjars.bower:angular-i18n:$angularJsVersion"
+    compile "org.webjars.bower:angular-resource:$angularJsVersion"
+    compile "org.webjars.bower:angular-sanitize:$angularJsVersion"
+    compile "org.webjars:angular-translate:$angularTranslateVersion"
+    compile "org.webjars:angular-ui-router:$uiRouterVersion"
+    compile "org.webjars.bower:angular-bindonce:$angularBindonceVersion"
+
+    compile "org.webjars:bootstrap:$bootstrapVersion"
+    compile "org.webjars:jquery:$jqueryVersion"
+
+    providedCompile "org.projectlombok:lombok:$lombokVersion"
+
+    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    compile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
+
+
+}

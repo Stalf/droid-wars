@@ -1,0 +1,72 @@
+version '0.1'
+
+apply plugin: 'rebel'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'http://repo.spring.io/plugins-release' }
+    }
+
+    dependencies {
+        classpath group: 'org.zeroturnaround', name: 'gradle-jrebel-plugin', version: '1.1.2'
+        classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
+    }
+}
+
+allprojects {
+    apply plugin: 'idea'
+
+    def loadProperties = { String fileName ->
+        def props = new Properties()
+        def propFile = file(fileName)
+        if (propFile.canRead()) {
+            propFile.withInputStream { props.load(it) }
+            props.each { project.setProperty(it.key, it.value) }
+        }
+    }
+
+    loadProperties 'gradle-local.properties'
+    loadProperties 'version.properties'
+
+}
+
+configure(allprojects) {
+    apply plugin: 'propdeps'
+    apply plugin: 'propdeps-maven'
+    apply plugin: 'propdeps-idea'
+}
+
+ext {
+    logbackVersion = '1.1.3'
+    slf4jVersion = '1.7.12'
+
+    lombokVersion = '1.16.6'
+
+    jstlVersion = '1.2'
+    springVersion = '4.2.2.RELEASE'
+    hibernateVersion = '5.0.2.Final'
+    mysqlConnectorVersion = '5.1.37'
+    commonsDBCP2Version = '2.1.1'
+    springDataJpaVersion = '1.9.0.RELEASE'
+    springDataCommonsVersion = '1.11.0.RELEASE'
+
+    angularJsVersion = '1.4.7'
+    angularTranslateVersion = '2.7.2'
+    uiRouterVersion = '0.2.15'
+    angularBindonceVersion = '0.3.3'
+
+    bootstrapVersion = '3.3.5'
+    jqueryVersion = '2.1.4'
+
+    jacksonVersion = '2.6.1'
+}
+
+configure(subprojects) {subproject ->
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+
+}
+
