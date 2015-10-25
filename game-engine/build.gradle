@@ -1,0 +1,12 @@
+apply plugin: 'java'
+
+
+dependencies {
+    compile project(':game-objects')
+
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
+
+    provided "org.projectlombok:lombok:$lombokVersion"
+
+    testCompile "junit:junit:$junitVersion"
+}

@@ -3,10 +3,6 @@ apply plugin: 'war'
 apply plugin: 'jetty'
 apply plugin: 'rebel'
 
-// JDK 7
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
-
 httpPort = properties['jetty.httpPort'] as Integer
 stopPort = properties['jetty.stopPort'] as Integer
 
