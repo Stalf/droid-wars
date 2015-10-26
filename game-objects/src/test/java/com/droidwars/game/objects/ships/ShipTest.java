@@ -2,19 +2,19 @@ package com.droidwars.game.objects.ships;
 
 import com.badlogic.gdx.math.Vector2;
 import com.droidwars.game.TestConstants;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import lombok.extern.slf4j.Slf4j;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
+@Slf4j
 public class ShipTest {
 
     private Ship ship;
 
-    @Before
+    @BeforeMethod
     public void setupTest() {
         ship = spy(new Ship(0L, new Vector2(0,0), new Vector2(1,0)));
     }

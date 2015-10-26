@@ -2,48 +2,57 @@ package com.droidwars.game.objects.ships;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.droidwars.game.command.Command;
+import com.droidwars.game.command.CommandExecutor;
+import com.droidwars.game.command.CommandExecutorImpl;
+import com.droidwars.game.command.Manageable;
 import com.droidwars.game.objects.AbstractGameObject;
 import com.droidwars.game.weaponry.Weapon;
 import com.google.common.collect.ImmutableList;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 /**
  * Абстрактный корабль
  */
-public class Ship extends AbstractGameObject {
+@Getter
+@Setter(AccessLevel.PROTECTED)
+public class Ship extends AbstractGameObject implements Manageable<Ship> {
 
     /**
      * Скорость поворота вокруг центральной оси - градусов в секунду
      */
-    @Getter
-    private float turnSpeed = 0.0f;
+    private float turnSpeed = 10.0f;
 
     /**
      * Ускорение в боковом направлении - м / с^2 <br/>
      * Вектор ускорения применяется в направлении, перпендикулярном {@link AbstractGameObject#facing}
      */
-    @Getter
-    private float strafe = 0.0f;
+    private float strafe = 5.0f;
 
     /**
      * Текущие единицы прочности корпуса корабля
      */
-    @Getter
     private float hullPoints = 100;
 
     /**
      * Максимальные единицы прочности корпуса корабля
      */
-    @Getter
     private float maxHullPoints = 100;
 
     /**
      * Список оружейных слотов
      */
-    @Getter
-    protected List<Weapon> weaponSlots = ImmutableList.of();
+    private List<Weapon> weaponSlots = ImmutableList.of();
+
+    /**
+     * Исполнитель команд корабля
+     */
+    @Setter(AccessLevel.NONE)
+    private CommandExecutor<Ship> commandExecutor = new CommandExecutorImpl<>(this);
 
     public Ship(long id, Vector2 position, Vector2 facing) {
         super(id, position, facing);
@@ -57,6 +66,7 @@ public class Ship extends AbstractGameObject {
             this.destroy();
         }
 
+        commandExecutor.execute(delta);
     }
 
     /**
@@ -85,19 +95,9 @@ public class Ship extends AbstractGameObject {
      *
      * @param direction направление поворота: 1 - против часовой стрелки; -1 - по часовой стрелке
      */
+
     public void turn(int direction) {
         this.getFacing().rotate(direction * this.turnSpeed * this.delta).nor();
-    }
-
-    /**
-     * Поворачивает корабль в направлении вектора. Учитывает максимальную скорость поворота корабля.
-     *
-     * @param direction требуемое направление корабля
-     */
-    public void turn(Vector2 direction) {
-        float angle = this.getFacing().angle(direction);
-
-        this.getFacing().rotate(Math.signum(angle) * Math.min(this.turnSpeed * this.delta, Math.abs(angle))).nor();
     }
 
     /**
@@ -113,7 +113,7 @@ public class Ship extends AbstractGameObject {
      * @param direction направление смещения. -1 - влево, 1 - вправо
      */
     public void strafe(int direction) {
-        this.getVelocity().add(this.getFacing().y * this.getStrafe() * direction * this.delta, - this.getFacing().x * this.getStrafe() * direction * this.delta);
+        this.getVelocity().add(this.getFacing().y * this.getStrafe() * direction * this.delta, -this.getFacing().x * this.getStrafe() * direction * this.delta);
     }
 
     /**
@@ -137,7 +137,11 @@ public class Ship extends AbstractGameObject {
      * @param amount величина полученных повреждений
      */
     public void applyDamage(float amount) {
-        this.hullPoints = Math.max(this.hullPoints - amount, 0);
+        this.hullPoints = Math.max(this.getHullPoints() - amount, 0);
     }
 
+    @Override
+    public void command(Command<Ship> command) {
+        commandExecutor.add(command);
+    }
 }

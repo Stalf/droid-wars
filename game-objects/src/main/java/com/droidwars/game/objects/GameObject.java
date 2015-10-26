@@ -1,6 +1,5 @@
 package com.droidwars.game.objects;
 
-import com.badlogic.gdx.math.Vector2;
 import com.droidwars.game.exceptions.GameException;
 
 /**
@@ -18,22 +17,4 @@ public interface GameObject {
      * Уничтожает объект
      */
     void destroy();
-
-    /**
-     * Возвращает публичную копию вектора координат объекта
-     * @return координаты центра объекта
-     */
-    Vector2 getPosition();
-
-    /**
-     * Возвращает публичную копию вектора направления объекта
-     * @return направление, в котором повернут объект
-     */
-    Vector2 getFacing();
-
-    /**
-     * Возвращает публичную копию вектора скорости
-     * @return скорость объекта - м /с
-     */
-    Vector2 getVelocity();
 }

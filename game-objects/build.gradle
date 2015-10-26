@@ -8,10 +8,11 @@ dependencies {
     compile "com.badlogicgames.gdx:gdx:$gdxVersion"
     compile "com.google.guava:guava:$guavaVersion"
 
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
     provided "org.projectlombok:lombok:$lombokVersion"
 
-    testCompile "junit:junit:$junitVersion"
+    testCompile "org.testng:testng:$testngVersion"
     testCompile "org.mockito:mockito-core:$mockitoVersion"
+    testCompile "ch.qos.logback:logback-classic:$logbackVersion"
 
 }
-

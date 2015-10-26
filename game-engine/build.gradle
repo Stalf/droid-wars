@@ -8,6 +8,6 @@ dependencies {
 
     provided "org.projectlombok:lombok:$lombokVersion"
 
-    testCompile "junit:junit:$junitVersion"
+    testCompile "org.testng:testng:$testngVersion"
     testCompile "org.mockito:mockito-core:$mockitoVersion"
 }

@@ -12,7 +12,7 @@ public class Missile extends Projectile {
 
         this.setDamage(damage);
         this.setMaxDistance(maxDistance);
-        this.velocity(startingVelocity);
+        this.setVelocity(startingVelocity);
 
     }
 

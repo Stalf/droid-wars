@@ -2,9 +2,9 @@ package com.droidwars.game.objects.projectiles;
 
 import com.badlogic.gdx.math.Vector2;
 import com.droidwars.game.TestConstants;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
@@ -16,9 +16,9 @@ public class MissileTest {
     private Projectile missile;
     private float time;
 
-    @Before
-    public void setupTest(){
-        missile = spy(new Missile(0L, new Vector2(0,0), new Vector2(1,0), MISSILE_STARTING_VELOCITY, 100, MISSILE_MAX_DISTANCE));
+    @BeforeMethod
+    public void setupTest() {
+        missile = spy(new Missile(0L, new Vector2(0, 0), new Vector2(1, 0), MISSILE_STARTING_VELOCITY, 100, MISSILE_MAX_DISTANCE));
     }
 
     @Test

@@ -71,6 +71,7 @@ ext {
     guavaVersion = '18.0'
 
     junitVersion='4.12'
+    testngVersion = '6.1.1'
     mockitoVersion = '1.10.19'
 }
 
@@ -81,5 +82,17 @@ configure(subprojects) {subproject ->
         mavenCentral()
     }
 
+    test {
+        useTestNG()
+
+        /*beforeTest { descriptor ->
+            logger.lifecycle("Running test: " + descriptor)
+        }
+
+        // listen to standard out and standard error of the test JVM(s)
+        onOutput { descriptor, event ->
+            logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
+        }*/
+    }
 }
 

@@ -11,7 +11,7 @@ public class Frigate extends Ship {
     public Frigate(long id, Vector2 position, Vector2 facing, IdGenerator idGenerator) {
         super(id, position, facing);
 
-        weaponSlots = ImmutableList.<Weapon>of(new MissileLauncher(idGenerator)).asList();
+        setWeaponSlots(ImmutableList.<Weapon>of(new MissileLauncher(idGenerator)).asList());
 
     }
 
