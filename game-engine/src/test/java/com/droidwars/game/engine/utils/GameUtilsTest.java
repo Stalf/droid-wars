@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class GameUtilsTest {
 
@@ -22,7 +23,11 @@ public class GameUtilsTest {
         Vector2 vector2 = GameUtils.generateRandomPosition();
 
         assertNotNull(vector2);
-        //TODO продолжить
+
+        assertTrue(vector2.x < Constants.MAP_WIDTH);
+        assertTrue(vector2.x >= 0);
+        assertTrue(vector2.y < Constants.MAP_WIDTH);
+        assertTrue(vector2.y >= 0);
 
     }
 

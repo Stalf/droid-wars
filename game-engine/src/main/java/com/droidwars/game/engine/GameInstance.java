@@ -20,7 +20,7 @@ import java.util.List;
 public class GameInstance implements Runnable {
 
     private final SimpleIdGenerator idGenerator = new SimpleIdGenerator();
-    private List<Ship> shipList = new LinkedList<>();
+    private List<Ship> shipList = new LinkedList<Ship>();
     private AbstractShipFactory shipFactory;
     private float time = 0f;
 

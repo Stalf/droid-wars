@@ -10,7 +10,7 @@ import lombok.Setter;
 /**
  * Абстрактный класс снаряда, который может наносить урон
  */
-public abstract class Projectile extends AbstractGameObject {
+public class Projectile extends AbstractGameObject {
 
     /**
      * Величина наносимого урона
@@ -46,6 +46,10 @@ public abstract class Projectile extends AbstractGameObject {
 
     @Override
     public void update(float delta) {
+        if (!isAlive()) {
+            return;
+        }
+
         super.update(delta);
 
         // Проверяем условия дальности и длительности полета

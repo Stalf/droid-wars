@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Абстрактный корабль
  */
-public abstract class Ship extends AbstractGameObject {
+public class Ship extends AbstractGameObject {
 
     /**
      * Скорость поворота вокруг центральной оси - градусов в секунду
@@ -31,13 +31,13 @@ public abstract class Ship extends AbstractGameObject {
      * Текущие единицы прочности корпуса корабля
      */
     @Getter
-    private float hullPoints = 0;
+    private float hullPoints = 100;
 
     /**
      * Максимальные единицы прочности корпуса корабля
      */
     @Getter
-    private float maxHullPoints = 0;
+    private float maxHullPoints = 100;
 
     /**
      * Список оружейных слотов
@@ -75,6 +75,8 @@ public abstract class Ship extends AbstractGameObject {
     public void shoot(int slot) {
         if (weaponSlots.size() < slot) {
             weaponSlots.get(slot).shoot();
+        } else {
+            throw new IllegalArgumentException("Неверный номер оружейного слота");
         }
     }
 

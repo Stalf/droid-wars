@@ -9,4 +9,5 @@ dependencies {
     provided "org.projectlombok:lombok:$lombokVersion"
 
     testCompile "junit:junit:$junitVersion"
+    testCompile "org.mockito:mockito-core:$mockitoVersion"
 }

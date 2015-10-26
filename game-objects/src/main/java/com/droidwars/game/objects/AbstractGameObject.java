@@ -109,6 +109,11 @@ public abstract class AbstractGameObject implements GameObject {
     @Override
     public void update(float delta) {
         this.delta = delta;
+
+        if (!alive) {
+            return;
+        }
+
         this.aliveTime += delta;
 
         // Изменяем положение под воздействием скорости
