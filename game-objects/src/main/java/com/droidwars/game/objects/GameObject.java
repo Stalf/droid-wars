@@ -8,6 +8,11 @@ import com.droidwars.game.exceptions.GameException;
 public interface GameObject {
 
     /**
+     * @return признак существования объекта в игровом мире
+     */
+    boolean isAlive();
+
+    /**
      * Обновляет состояние объекта
      * @param delta - время, прошедшее с предыдущего такта
      */

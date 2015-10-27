@@ -8,15 +8,13 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static org.mockito.Mockito.spy;
-
 public class TurnDirectionCommandTest {
 
     private Ship ship;
 
     @BeforeMethod
     public void setupTest() {
-        ship = spy(new Ship(0L, new Vector2(0,0), new Vector2(1,0)));
+        ship = new Ship(0L, new Vector2(0,0), new Vector2(1,0));
     }
 
     @DataProvider

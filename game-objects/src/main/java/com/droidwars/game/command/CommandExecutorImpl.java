@@ -1,5 +1,6 @@
 package com.droidwars.game.command;
 
+import com.droidwars.game.objects.GameObject;
 import com.google.common.collect.Maps;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.Map;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class CommandExecutorImpl<T> implements CommandExecutor<T> {
+public class CommandExecutorImpl<T extends GameObject> implements CommandExecutor<T> {
 
     @NonNull
     private T subject;
@@ -56,6 +57,10 @@ public class CommandExecutorImpl<T> implements CommandExecutor<T> {
 
     @Override
     public void execute(float delta) {
+
+        if (!subject.isAlive()) {
+            return;
+        }
 
         for (Map.Entry<CommandType, Command<T>> next : commands.entrySet()) {
             Command command = next.getValue();

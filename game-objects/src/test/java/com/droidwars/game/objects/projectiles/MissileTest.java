@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static com.droidwars.game.TestConstants.DELTA_STEP;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
@@ -24,9 +25,9 @@ public class MissileTest {
         float time = 0;
         do {
 
-            time += TestConstants.DELTA_STEP;
+            time += DELTA_STEP;
 
-            missile.update(TestConstants.DELTA_STEP);
+            missile.update(DELTA_STEP);
 
         } while (time < 5);
 
@@ -45,9 +46,9 @@ public class MissileTest {
         float time = 0;
         do {
 
-            time += TestConstants.DELTA_STEP;
+            time += DELTA_STEP;
 
-            missile.update(TestConstants.DELTA_STEP);
+            missile.update(DELTA_STEP);
 
 
         } while (time < 4 /*C ускорением должен пролететь быстрее*/);

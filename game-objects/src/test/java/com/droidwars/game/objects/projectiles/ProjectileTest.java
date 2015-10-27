@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static com.droidwars.game.TestConstants.DELTA_STEP;
 import static org.mockito.Mockito.spy;
 
 public class ProjectileTest {
@@ -23,9 +24,9 @@ public class ProjectileTest {
         float time = 0;
         do {
 
-            time += TestConstants.DELTA_STEP;
+            time += DELTA_STEP;
 
-            projectile.update(TestConstants.DELTA_STEP);
+            projectile.update(DELTA_STEP);
 
         } while (time < 5);
 
@@ -43,9 +44,9 @@ public class ProjectileTest {
         float time = 0;
         do {
 
-            time += TestConstants.DELTA_STEP;
+            time += DELTA_STEP;
 
-            projectile.update(TestConstants.DELTA_STEP);
+            projectile.update(DELTA_STEP);
 
         } while (time < 5);
 
@@ -63,9 +64,9 @@ public class ProjectileTest {
         float time = 0;
         do {
 
-            time += TestConstants.DELTA_STEP;
+            time += DELTA_STEP;
 
-            projectile.update(TestConstants.DELTA_STEP);
+            projectile.update(DELTA_STEP);
 
         } while (time < 10);
 
@@ -83,13 +84,13 @@ public class ProjectileTest {
         float time = 0;
         do {
 
-            time += TestConstants.DELTA_STEP;
+            time += DELTA_STEP;
 
-            projectile.update(TestConstants.DELTA_STEP);
+            projectile.update(DELTA_STEP);
 
         } while (time < 5);
 
-        Assert.assertEquals(projectile.getTravelDistance(), 124, 1);
+        Assert.assertEquals(projectile.getTravelDistance(), 125, 1);
         Assert.assertEquals(projectile.getVelocity().x, 0, 1);
         Assert.assertEquals(projectile.getVelocity().y, 0, 1);
 
