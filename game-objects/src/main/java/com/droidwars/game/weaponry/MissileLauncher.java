@@ -14,6 +14,7 @@ public class MissileLauncher extends AbstractWeapon {
     private static final float initialMissileVelocity = 150;
     private static final float missileDamage = 100;
     private static final float missileMaxDistance = 700;
+    public static final int missile_acceleration = 10;
 
     public MissileLauncher(@NonNull IdGenerator idGenerator) {
         super(idGenerator);
@@ -24,12 +25,12 @@ public class MissileLauncher extends AbstractWeapon {
 
         Vector2 missileVelocity = new Vector2(getShip().getFacing()).scl(initialMissileVelocity).add(getShip().getVelocity());
 
-        return new Missile(generateId(), getShootingPosition(), getShip().getFacing(), missileVelocity, missileDamage, missileMaxDistance);
+        return new Missile(generateId(), getShootingPosition(), getShip().getFacing(), missileVelocity, missileDamage, missileMaxDistance, missile_acceleration);
     }
 
     @Override
     public Vector2 getShootingPosition() {
-        // TODO реализовать реальное раположение орудий на кораблях
+        // TODO реализовать реальное расположение орудий на кораблях
         return getShip().getPosition();
     }
 }

@@ -21,11 +21,16 @@ public class TurnDirectionCommandTest {
 
     @DataProvider
     public Object[][] getData() {
-        return new Object[][]{{1, new Vector2(0, 1)}, {-1, new Vector2(0, -1)}};
+        return new Object[][]{
+                {1, new Vector2(0, 1), 9},
+                {-1, new Vector2(0, -1), 9},
+                {1, new Vector2(-1, 0), 18},
+                {-1, new Vector2(-1, 0), 18}
+        };
     }
 
     @Test(dataProvider = "getData")
-    public void shipShouldTurnToDesiredDirection(int direction, Vector2 result) {
+    public void shipShouldTurnToDesiredDirection(int direction, Vector2 result, int turnTime) {
         float time = 0f;
         float STEP = 0.01f;
 
@@ -36,7 +41,7 @@ public class TurnDirectionCommandTest {
 
             ship.update(STEP);
 
-        } while (time < 9);
+        } while (time < turnTime);
 
         Assert.assertEquals(ship.getFacing().x, result.x, TestConstants.EPSILON);
         Assert.assertEquals(ship.getFacing().y, result.y, TestConstants.EPSILON);

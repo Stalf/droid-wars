@@ -16,16 +16,20 @@ public class TurnVectorCommandTest {
 
     @BeforeMethod
     public void setupTest() {
-        ship = spy(new Ship(0L, new Vector2(0,0), new Vector2(1,0)));
+        ship = spy(new Ship(0L, new Vector2(0, 0), new Vector2(1, 0)));
     }
 
     @DataProvider
     public Object[][] getData() {
-        return new Object[][]{{new Vector2(0, 1)}, {new Vector2(0, -1)}};
+        return new Object[][]{
+                {new Vector2(0, 1), 9},
+                {new Vector2(0, -1), 9},
+                {new Vector2(-1, 0), 18}
+        };
     }
 
     @Test(dataProvider = "getData")
-    public void shipShouldTurnToDesiredDirection(Vector2 direction) {
+    public void shipShouldTurnToDesiredDirection(Vector2 direction, int turnTime) {
         float time = 0f;
         float STEP = 0.1f;
 
@@ -37,9 +41,9 @@ public class TurnVectorCommandTest {
             ship.update(STEP);
 
             if (ship.getFacing().equals(direction)) {
-                Assert.assertEquals(time, 9, TestConstants.EPSILON);
+                Assert.assertEquals(time, turnTime, TestConstants.EPSILON);
             }
-        } while (time < 9);
+        } while (time < turnTime);
 
         Assert.assertEquals(ship.getFacing().x, direction.x, TestConstants.EPSILON);
         Assert.assertEquals(ship.getFacing().y, direction.y, TestConstants.EPSILON);

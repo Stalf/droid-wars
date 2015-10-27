@@ -88,6 +88,9 @@ public abstract class AbstractGameObject implements GameObject {
 
         // Изменяем положение под воздействием скорости
         this.position.add(velocity.x * delta, velocity.y * delta);
+        // Увеличиваем скорость
+        this.velocity.add(facing.x * acceleration * delta, facing.y * acceleration * delta);
+
         this.travelDistance += velocity.len() * delta;
     }
 
