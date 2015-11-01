@@ -1,6 +1,7 @@
 package com.droidwars.game.engine;
 
 import com.droidwars.game.GameInstance;
+import com.droidwars.game.command.ship.TurnDirectionCommand;
 import com.droidwars.game.engine.factory.AbstractShipFactory;
 import com.droidwars.game.engine.factory.RandomPositionShipFactory;
 import com.droidwars.game.engine.utils.Constants;
@@ -12,7 +13,9 @@ import com.droidwars.game.record.GameRecordWriterJavaSerializationImpl;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,12 +33,18 @@ public class GameInstanceServerImpl implements Runnable, GameInstance {
 
     private OutputStream battleLogFile;
 
+    @Getter
     private List<Ship> shipList = new LinkedList<>();
     private AbstractShipFactory shipFactory = new RandomPositionShipFactory(this);
+    @Getter
     private float time = 0f;
 
-    public GameInstanceServerImpl() throws IOException {
-        battleLogFile = new FileOutputStream(File.createTempFile("battleLog", ".dwl"));
+    public GameInstanceServerImpl() {
+        try {
+            battleLogFile = new FileOutputStream("temp.out");
+        } catch (FileNotFoundException e) {
+            log.error("Ошибка открытия файла записи лога боя", e);
+        }
     }
 
     /**
@@ -54,7 +63,7 @@ public class GameInstanceServerImpl implements Runnable, GameInstance {
     }
 
     public void stopBattle() {
-        gameRecordWriter.stopRecord(new ByteArrayOutputStream());
+        gameRecordWriter.stopRecord(battleLogFile);
     }
 
     public void update(float delta) {
@@ -67,6 +76,7 @@ public class GameInstanceServerImpl implements Runnable, GameInstance {
         gameRecordWriter.stepBegin(delta);
 
         for (Ship ship: shipList) {
+            ship.command(new TurnDirectionCommand(1));
             ship.update(delta);
         }
 
