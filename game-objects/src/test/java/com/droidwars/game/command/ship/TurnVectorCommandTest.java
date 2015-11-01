@@ -1,6 +1,7 @@
 package com.droidwars.game.command.ship;
 
 import com.badlogic.gdx.math.Vector2;
+import com.droidwars.game.AbstractGameInstanceTest;
 import com.droidwars.game.TestConstants;
 import com.droidwars.game.objects.ships.Ship;
 import org.testng.Assert;
@@ -8,13 +9,13 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class TurnVectorCommandTest {
+public class TurnVectorCommandTest extends AbstractGameInstanceTest {
 
     private Ship ship;
 
     @BeforeMethod
     public void setupTest() {
-        ship = new Ship(0L, new Vector2(0, 0), new Vector2(1, 0));
+        ship = new Ship(gameInstance, new Vector2(0, 0), new Vector2(1, 0));
     }
 
     @DataProvider

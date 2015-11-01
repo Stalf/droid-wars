@@ -20,7 +20,6 @@ public class GameUtilsTest {
         Vector2 vector2 = GameUtils.generateRandomPosition();
 
         Assert.assertNotNull(vector2);
-
         Assert.assertTrue(vector2.x <= Constants.MAP_WIDTH);
         Assert.assertTrue(vector2.x >= 0);
         Assert.assertTrue(vector2.y <= Constants.MAP_WIDTH);

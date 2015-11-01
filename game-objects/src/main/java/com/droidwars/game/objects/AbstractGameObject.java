@@ -1,6 +1,7 @@
 package com.droidwars.game.objects;
 
 import com.badlogic.gdx.math.Vector2;
+import com.droidwars.game.GameInstance;
 import lombok.*;
 
 /**
@@ -64,12 +65,18 @@ public abstract class AbstractGameObject implements GameObject {
     private long gameId = 0;
 
     /**
+     * Ссылка на контроллер боя
+     */
+    private GameInstance gameInstance;
+
+    /**
      * Время, прошедшее с предыдущего такта. Значение параметра обновляется на каждом такте
      */
     protected float delta = 0f;
 
-    public AbstractGameObject(long id, Vector2 position, Vector2 facing) {
-        this.gameId = id;
+    public AbstractGameObject(GameInstance gameInstance, Vector2 position, Vector2 facing) {
+        this.gameInstance = gameInstance;
+        this.gameId = gameInstance.getIdGenerator().getNextId();
 
         this.position.set(position);
         this.facing.set(facing.nor());

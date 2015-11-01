@@ -1,6 +1,7 @@
 package com.droidwars.game.objects.projectiles;
 
 import com.badlogic.gdx.math.Vector2;
+import com.droidwars.game.GameInstance;
 import com.droidwars.game.objects.AbstractGameObject;
 import com.droidwars.game.objects.ships.Ship;
 import lombok.AccessLevel;
@@ -40,8 +41,8 @@ public class Projectile extends AbstractGameObject {
     @Setter(AccessLevel.PROTECTED)
     private Ship owner;
 
-    public Projectile(long id, Vector2 position, Vector2 facing) {
-        super(id, position, facing);
+    public Projectile(GameInstance gameInstance, Vector2 position, Vector2 facing) {
+        super(gameInstance, position, facing);
     }
 
     @Override

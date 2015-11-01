@@ -1,31 +1,41 @@
 package com.droidwars.game.engine;
 
+import com.droidwars.game.GameInstance;
 import com.droidwars.game.engine.factory.AbstractShipFactory;
 import com.droidwars.game.engine.factory.RandomPositionShipFactory;
 import com.droidwars.game.engine.utils.Constants;
 import com.droidwars.game.generator.SimpleIdGenerator;
 import com.droidwars.game.objects.ships.Ship;
 import com.droidwars.game.objects.ships.ShipType;
+import com.droidwars.game.record.GameRecordWriter;
+import com.droidwars.game.record.GameRecordWriterJavaSerializationImpl;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Основной класс, содержащий информацию о боевой части игры.
  * Для каждого боя формируется один экземпляр этого класса.
- * Реализует основной жизненный цикл игры
+ * Реализует основной жизненный цикл игры.
  */
 @Slf4j
-public class GameInstance implements Runnable {
+public class GameInstanceServerImpl implements Runnable, GameInstance {
 
+    @Getter
     private final SimpleIdGenerator idGenerator = new SimpleIdGenerator();
-    private List<Ship> shipList = new LinkedList<Ship>();
-    private AbstractShipFactory shipFactory;
+    @Getter
+    private final GameRecordWriter gameRecordWriter = new GameRecordWriterJavaSerializationImpl();
+
+    private OutputStream battleLogFile;
+
+    private List<Ship> shipList = new LinkedList<>();
+    private AbstractShipFactory shipFactory = new RandomPositionShipFactory(this);
     private float time = 0f;
 
-    public GameInstance() {
-        shipFactory = new RandomPositionShipFactory(idGenerator);
+    public GameInstanceServerImpl() throws IOException {
+        battleLogFile = new FileOutputStream(File.createTempFile("battleLog", ".dwl"));
     }
 
     /**
@@ -38,19 +48,29 @@ public class GameInstance implements Runnable {
         time = 0f;
 
         shipList.add(shipFactory.getShip(ShipType.FRIGATE));
+        shipList.add(shipFactory.getShip(ShipType.FRIGATE));
 
+        gameRecordWriter.startRecord(shipList);
+    }
+
+    public void stopBattle() {
+        gameRecordWriter.stopRecord(new ByteArrayOutputStream());
     }
 
     public void update(float delta) {
         time += delta;
 
-        if (log.isDebugEnabled()) {
-            log.debug("Game step, time: {0}", time);
+        if (log.isTraceEnabled()) {
+            log.trace("Game step, time: {}; delta: {}", time, delta);
         }
 
-        for (Ship next: shipList) {
-            next.update(delta);
+        gameRecordWriter.stepBegin(delta);
+
+        for (Ship ship: shipList) {
+            ship.update(delta);
         }
+
+        gameRecordWriter.stepEnd();
 
     }
 
@@ -67,9 +87,14 @@ public class GameInstance implements Runnable {
                 update(Constants.DELTA_STEP);
             } else {
                 log.debug("Game thread interrupted");
+
+                stopBattle();
+
                 return;
             }
 
         } while (time < 10);
+
+        stopBattle();
     }
 }

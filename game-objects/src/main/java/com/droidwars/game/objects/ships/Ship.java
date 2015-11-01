@@ -2,6 +2,7 @@ package com.droidwars.game.objects.ships;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.droidwars.game.GameInstance;
 import com.droidwars.game.command.Command;
 import com.droidwars.game.command.CommandExecutor;
 import com.droidwars.game.command.CommandExecutorImpl;
@@ -54,8 +55,8 @@ public class Ship extends AbstractGameObject implements Manageable<Ship> {
     @Setter(AccessLevel.NONE)
     private CommandExecutor<Ship> commandExecutor = new CommandExecutorImpl<>(this);
 
-    public Ship(long id, Vector2 position, Vector2 facing) {
-        super(id, position, facing);
+    public Ship(GameInstance gameInstance, Vector2 position, Vector2 facing) {
+        super(gameInstance, position, facing);
     }
 
     @Override

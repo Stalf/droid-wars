@@ -1,6 +1,7 @@
 package com.droidwars.game.objects.projectiles;
 
 import com.badlogic.gdx.math.Vector2;
+import com.droidwars.game.AbstractGameInstanceTest;
 import com.droidwars.game.TestConstants;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -9,13 +10,13 @@ import org.testng.annotations.Test;
 import static com.droidwars.game.TestConstants.DELTA_STEP;
 import static org.mockito.Mockito.spy;
 
-public class ProjectileTest {
+public class ProjectileTest extends AbstractGameInstanceTest {
 
     private Projectile projectile;
 
     @BeforeMethod
     public void setupTest() {
-        projectile = spy(new Projectile(0L, new Vector2(0, 0), new Vector2(1, 0)));
+        projectile = spy(new Projectile(gameInstance, new Vector2(0, 0), new Vector2(1, 0)));
     }
 
     @Test

@@ -1,10 +1,9 @@
 package com.droidwars.game.weaponry;
 
 import com.badlogic.gdx.math.Vector2;
-import com.droidwars.game.generator.IdGenerator;
+import com.droidwars.game.GameInstance;
 import com.droidwars.game.objects.projectiles.Missile;
 import com.droidwars.game.objects.projectiles.Projectile;
-import lombok.NonNull;
 
 /**
  * Ракетная пусковая установка
@@ -16,8 +15,8 @@ public class MissileLauncher extends AbstractWeapon {
     private static final float missileMaxDistance = 700;
     public static final int missile_acceleration = 10;
 
-    public MissileLauncher(@NonNull IdGenerator idGenerator) {
-        super(idGenerator);
+    public MissileLauncher(GameInstance gameInstance) {
+        super(gameInstance);
     }
 
     @Override
@@ -25,7 +24,7 @@ public class MissileLauncher extends AbstractWeapon {
 
         Vector2 missileVelocity = new Vector2(getShip().getFacing()).scl(initialMissileVelocity).add(getShip().getVelocity());
 
-        return new Missile(generateId(), getShootingPosition(), getShip().getFacing(), missileVelocity, missileDamage, missileMaxDistance, missile_acceleration);
+        return new Missile(getGameInstance(), getShootingPosition(), getShip().getFacing(), missileVelocity, missileDamage, missileMaxDistance, missile_acceleration);
     }
 
     @Override

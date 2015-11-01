@@ -1,6 +1,7 @@
 package com.droidwars.game.objects.projectiles;
 
 import com.badlogic.gdx.math.Vector2;
+import com.droidwars.game.AbstractGameInstanceTest;
 import com.droidwars.game.TestConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
@@ -11,7 +12,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 @Slf4j
-public class MissileTest {
+public class MissileTest extends AbstractGameInstanceTest {
 
     public static final int MISSILE_MAX_DISTANCE = 700;
     public static final Vector2 MISSILE_STARTING_VELOCITY = new Vector2(150, 0);
@@ -20,7 +21,7 @@ public class MissileTest {
     @Test
     public void missileShouldDestroyAfterMaxDistanceTravelled() {
 
-        Missile missile = spy(new Missile(0L, new Vector2(0, 0), new Vector2(1, 0), MISSILE_STARTING_VELOCITY, MISSILE_DAMAGE, MISSILE_MAX_DISTANCE, 0));
+        Missile missile = spy(new Missile(gameInstance, new Vector2(0, 0), new Vector2(1, 0), MISSILE_STARTING_VELOCITY, MISSILE_DAMAGE, MISSILE_MAX_DISTANCE, 0));
 
         float time = 0;
         do {
@@ -41,7 +42,7 @@ public class MissileTest {
     @Test
     public void missileShouldDestroyAfterMaxDistanceTravelledAccelerated() {
 
-        Projectile missile = spy(new Missile(1L, new Vector2(0, 0), new Vector2(1, 0), MISSILE_STARTING_VELOCITY, MISSILE_DAMAGE, MISSILE_MAX_DISTANCE, 50));
+        Projectile missile = spy(new Missile(gameInstance, new Vector2(0, 0), new Vector2(1, 0), MISSILE_STARTING_VELOCITY, MISSILE_DAMAGE, MISSILE_MAX_DISTANCE, 50));
 
         float time = 0;
         do {

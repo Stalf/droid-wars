@@ -1,9 +1,11 @@
 package com.droidwars.game.command;
 
+import java.io.Serializable;
+
 /**
  * Реализует шаблон проектирования Команда
  */
-public interface Command<T> {
+public interface Command<T> extends Serializable {
 
     /**
      * Исполнение команды

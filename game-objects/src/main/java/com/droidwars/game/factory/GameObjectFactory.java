@@ -1,5 +1,6 @@
 package com.droidwars.game.factory;
 
+import com.droidwars.game.GameInstance;
 import com.droidwars.game.objects.AbstractGameObject;
 
 /**
@@ -10,6 +11,6 @@ public interface GameObjectFactory {
     /**
      * @return уникальный идентификатор игрового объекта
      */
-    long generateId();
+    GameInstance getGameInstance();
 
 }

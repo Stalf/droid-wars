@@ -1,5 +1,6 @@
 package com.droidwars.game.objects;
 
+import com.droidwars.game.GameInstance;
 import com.droidwars.game.exceptions.GameException;
 
 /**
@@ -22,4 +23,11 @@ public interface GameObject {
      * Уничтожает объект
      */
     void destroy();
+
+    /**
+     * @return контроллер боя
+     */
+    GameInstance getGameInstance();
+
+    long getGameId();
 }

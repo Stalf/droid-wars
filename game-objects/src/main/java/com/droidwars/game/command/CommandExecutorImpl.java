@@ -69,6 +69,10 @@ public class CommandExecutorImpl<T extends GameObject> implements CommandExecuto
                 log.trace("Executing command {}", next.getKey().name());
             }
 
+            // Перед выполнением пишем команду в лог боя
+            subject.getGameInstance().getGameRecordWriter().write(subject, command);
+
+            // Выполняем команду
             command.execute(subject, delta);
         }
 

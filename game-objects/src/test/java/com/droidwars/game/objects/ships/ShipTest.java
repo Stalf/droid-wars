@@ -1,6 +1,7 @@
 package com.droidwars.game.objects.ships;
 
 import com.badlogic.gdx.math.Vector2;
+import com.droidwars.game.AbstractGameInstanceTest;
 import com.droidwars.game.TestConstants;
 import com.droidwars.game.command.CommandExecutorImpl;
 import com.droidwars.game.command.ship.TurnDirectionCommand;
@@ -15,13 +16,13 @@ import static com.droidwars.game.TestConstants.DELTA_STEP;
 import static org.mockito.Mockito.*;
 
 @Slf4j
-public class ShipTest {
+public class ShipTest extends AbstractGameInstanceTest {
 
     private Ship ship;
 
     @BeforeMethod
     public void setupTest() {
-        ship = spy(new Ship(0L, new Vector2(0,0), new Vector2(1,0)));
+        ship = spy(new Ship(gameInstance, new Vector2(0,0), new Vector2(1,0)));
     }
 
     @Test
