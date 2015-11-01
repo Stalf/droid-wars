@@ -1,6 +1,5 @@
 package com.droidwars.game.record;
 
-import com.badlogic.gdx.math.Vector2;
 import com.droidwars.game.objects.ships.Ship;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -9,6 +8,7 @@ import lombok.Getter;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 /**
  * Класс для сохранений всей истории боя
@@ -16,18 +16,14 @@ import java.util.Map;
 @Getter
 public class BattleRecord implements Serializable {
 
-    private List<StepRecord> recordList = Lists.newLinkedList();
+    private Queue<StepRecord> recordList = Lists.newLinkedList();
 
-    private Map<Long, Class> ships = Maps.newHashMap();
-    private Map<Long, Vector2> positions = Maps.newHashMap();
-    private Map<Long, Vector2> facings = Maps.newHashMap();
+    private Map<Long, ShipRecord> ships = Maps.newHashMap();
 
     public BattleRecord(List<Ship> ships) {
 
         for (Ship ship : ships) {
-            this.ships.put(ship.getGameId(), ship.getClass());
-            positions.put(ship.getGameId(), ship.getPosition().cpy());
-            facings.put(ship.getGameId(), ship.getFacing().cpy());
+            this.ships.put(ship.getGameId(), new ShipRecord(ship.getClass(), ship.getPosition().cpy(), ship.getFacing().cpy()));
         }
 
     }

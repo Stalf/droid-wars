@@ -15,7 +15,7 @@ import java.util.List;
  * Неоптимальная и требует доработки!
  */
 @Slf4j
-public class GameRecordWriterJavaSerializationImpl implements GameRecordWriter {
+public class JavaSerializationGameRecordWriterImpl implements GameRecordWriter {
 
     private BattleRecord battleRecord;
     private StepRecord tmpStep = null;

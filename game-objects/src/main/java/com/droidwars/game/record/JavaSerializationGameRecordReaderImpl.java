@@ -12,7 +12,7 @@ import java.io.ObjectInputStream;
  * Неоптимальная и требует доработки!
  */
 @Slf4j
-public class GameRecordReaderJavaSerializationImpl implements GameRecordReader {
+public class JavaSerializationGameRecordReaderImpl implements GameRecordReader {
 
     @Override
     public BattleRecord read(InputStream inputStream) {

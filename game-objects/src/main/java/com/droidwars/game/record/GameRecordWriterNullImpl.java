@@ -1,14 +1,16 @@
-package com.droidwars.game;
+package com.droidwars.game.record;
 
 import com.droidwars.game.command.Command;
 import com.droidwars.game.objects.GameObject;
 import com.droidwars.game.objects.ships.Ship;
-import com.droidwars.game.record.GameRecordWriter;
 
 import java.io.OutputStream;
 import java.util.List;
 
-public class GameRecordWriterNullTestImpl implements GameRecordWriter {
+/**
+ * Пустая реализация. Не выполняет никаких действий
+ */
+public class GameRecordWriterNullImpl implements GameRecordWriter {
     @Override
     public void startRecord(List<Ship> ships) {
 

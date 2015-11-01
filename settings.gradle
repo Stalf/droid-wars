@@ -4,4 +4,8 @@ include 'droidwars-web'
 include 'droidwars-core'
 include 'game-engine'
 include 'game-objects'
+include 'player'
+include 'player:player-core'
+include 'player:player-desktop'
+
 

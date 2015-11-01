@@ -23,8 +23,8 @@ public class RecorderJavaSerializationImplTest {
 
     @BeforeMethod
     public void setup() {
-        gameRecordWriter =  new GameRecordWriterJavaSerializationImpl();
-        gameRecordReader = new GameRecordReaderJavaSerializationImpl();
+        gameRecordWriter =  new JavaSerializationGameRecordWriterImpl();
+        gameRecordReader = new JavaSerializationGameRecordReaderImpl();
         gameInstance = new GameInstanceNullTestImpl(gameRecordWriter);
         ship = new Ship(gameInstance, new Vector2(0,0), new Vector2(1,0));
 
@@ -59,7 +59,7 @@ public class RecorderJavaSerializationImplTest {
         Assert.assertEquals(battleRecord.getShips().size(), 1);
         Assert.assertEquals(battleRecord.getRecordList().size(), 2);
 
-        StepRecord stepRecord = battleRecord.getRecordList().get(0);
+        StepRecord stepRecord = battleRecord.getRecordList().peek();
         Assert.assertNotNull(stepRecord);
         Assert.assertEquals(stepRecord.getCommands().size(), 1);
         Assert.assertEquals(stepRecord.getDelta(), TestConstants.DELTA_STEP);

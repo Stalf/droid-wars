@@ -1,0 +1,9 @@
+apply plugin: "java"
+
+dependencies {
+    compile project(':game-objects')
+
+    provided "org.projectlombok:lombok:$lombokVersion"
+
+    compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+}

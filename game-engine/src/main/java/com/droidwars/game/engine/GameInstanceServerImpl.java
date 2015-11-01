@@ -9,7 +9,7 @@ import com.droidwars.game.generator.SimpleIdGenerator;
 import com.droidwars.game.objects.ships.Ship;
 import com.droidwars.game.objects.ships.ShipType;
 import com.droidwars.game.record.GameRecordWriter;
-import com.droidwars.game.record.GameRecordWriterJavaSerializationImpl;
+import com.droidwars.game.record.JavaSerializationGameRecordWriterImpl;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +29,7 @@ public class GameInstanceServerImpl implements Runnable, GameInstance {
     @Getter
     private final SimpleIdGenerator idGenerator = new SimpleIdGenerator();
     @Getter
-    private final GameRecordWriter gameRecordWriter = new GameRecordWriterJavaSerializationImpl();
+    private final GameRecordWriter gameRecordWriter = new JavaSerializationGameRecordWriterImpl();
 
     private OutputStream battleLogFile;
 
