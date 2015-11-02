@@ -3,6 +3,7 @@ package com.droidwars.game.record;
 import com.droidwars.game.command.Command;
 import com.droidwars.game.command.CommandType;
 import com.droidwars.game.objects.GameObject;
+import com.droidwars.game.objects.ships.Ship;
 import com.google.common.collect.Maps;
 import lombok.Getter;
 
@@ -16,7 +17,7 @@ import java.util.HashMap;
 @Getter
 public class StepRecord implements Serializable {
 
-    private HashMap<Long, EnumMap<CommandType, Command>> commands = Maps.newHashMap();
+    private HashMap<Long, EnumMap<CommandType, Command<Ship>>> shipCommands = Maps.newHashMap();
     private float delta;
 
     public StepRecord(float delta) {
@@ -24,19 +25,19 @@ public class StepRecord implements Serializable {
     }
 
     /**
-     * Сохраняет команду игровому объекту
+     * Сохраняет команду кораблю
      *
-     * @param subject - объект (корабль, ракета, и т.д.)
+     * @param subject - объект (корабль)
      * @param command - команда
      */
-    public void record(GameObject subject, Command command) {
-        EnumMap<CommandType, Command> objectEnumMap;
+    public void record(GameObject subject, Command<Ship> command) {
+        EnumMap<CommandType, Command<Ship>> objectEnumMap;
         long gameId = subject.getGameId();
-        if (!commands.containsKey(gameId)) {
+        if (!shipCommands.containsKey(gameId)) {
             objectEnumMap = new EnumMap<>(CommandType.class);
-            commands.put(gameId, objectEnumMap);
+            shipCommands.put(gameId, objectEnumMap);
         } else {
-            objectEnumMap = commands.get(gameId);
+            objectEnumMap = shipCommands.get(gameId);
         }
 
         objectEnumMap.put(command.getType(), command);

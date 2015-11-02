@@ -9,7 +9,7 @@ import com.droidwars.game.objects.AbstractGameObject;
 public interface GameObjectFactory {
 
     /**
-     * @return уникальный идентификатор игрового объекта
+     * @return ссылка на контроллер боя
      */
     GameInstance getGameInstance();
 

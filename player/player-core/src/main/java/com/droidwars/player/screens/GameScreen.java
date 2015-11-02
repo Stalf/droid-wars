@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.droidwars.player.GameInstancePlayerImpl;
 import com.droidwars.player.background.BackgroundFXRenderer;
 import com.droidwars.player.utils.Constants;
 
@@ -15,7 +16,9 @@ public class GameScreen extends DefaultScreen implements InputProcessor {
 
     private SpriteBatch gameBatch;
 
-//    private HUD hud;
+    private GameInstancePlayerImpl instancePlayer;
+
+    private HUD hud;
 
     public GameScreen(Game game) {
         super(game);
@@ -24,13 +27,16 @@ public class GameScreen extends DefaultScreen implements InputProcessor {
 
         backgroundFX = new BackgroundFXRenderer();
 
-//        hud = new HUD();
+        hud = new HUD();
 
         gameBatch = new SpriteBatch();
 
         cam = new OrthographicCamera(Constants.MAP_WIDTH, Constants.MAP_HEIGHT);
         cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
         cam.update();
+
+        instancePlayer = GameInstancePlayerImpl.getInstance();
+        instancePlayer.startNewSimulation();
 
         //GameInstance.getInstance().resetGame();
 
@@ -44,7 +50,7 @@ public class GameScreen extends DefaultScreen implements InputProcessor {
 
         cam.update();
 
-//        hud.resize(width, height);
+        hud.resize(width, height);
     }
 
     @Override
@@ -65,13 +71,11 @@ public class GameScreen extends DefaultScreen implements InputProcessor {
 
         gameBatch.begin();
 
-//        GameInstance.getInstance().renderAll(gameBatch);
+        instancePlayer.renderAll(delta, gameBatch);
 
         gameBatch.end();
 
-//        GameInstance.getInstance().renderDebugAll(gameBatch);
-
-//        hud.render();
+        hud.render();
 
         /*if (GameInstance.getInstance().gameOver) {
             hud.renderGameOver();

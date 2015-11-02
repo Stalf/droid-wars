@@ -4,6 +4,7 @@ import com.droidwars.game.GameInstance;
 import com.droidwars.game.factory.GameObjectFactory;
 import com.droidwars.game.objects.ships.Ship;
 import com.droidwars.game.objects.ships.ShipType;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 public abstract class AbstractShipFactory implements GameObjectFactory{
 
     @NonNull
+    @Getter
     protected GameInstance gameInstance;
 
     /**
@@ -21,10 +23,6 @@ public abstract class AbstractShipFactory implements GameObjectFactory{
      * @param type запрошенный тип корабля
      * @return новый корабль
      */
-    public abstract Ship getShip(ShipType type);
+    public abstract Ship getShip(ShipType type, int teamNumber);
 
-    @Override
-    public GameInstance getGameInstance() {
-        return gameInstance;
-    }
 }

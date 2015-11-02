@@ -5,16 +5,18 @@ project.ext.assetsDir = new File("../android/assets");
 
 dependencies {
     compile project(":player:player-core")
+
     compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
     compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
 }
 
 task run(dependsOn: classes, type: JavaExec) {
+
     main = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
     workingDir = project.assetsDir
-    ignoreExitValue = true
+    ignoreExitValue true
 }
 
 task dist(type: Jar) {

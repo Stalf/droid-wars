@@ -41,7 +41,7 @@ public class GameInstanceServerImpl implements Runnable, GameInstance {
 
     public GameInstanceServerImpl() {
         try {
-            battleLogFile = new FileOutputStream("temp.out");
+            battleLogFile = new FileOutputStream("c:/work/droid-wars/tmp/temp.out");
         } catch (FileNotFoundException e) {
             log.error("Ошибка открытия файла записи лога боя", e);
         }
@@ -56,8 +56,8 @@ public class GameInstanceServerImpl implements Runnable, GameInstance {
 
         time = 0f;
 
-        shipList.add(shipFactory.getShip(ShipType.FRIGATE));
-        shipList.add(shipFactory.getShip(ShipType.FRIGATE));
+        shipList.add(shipFactory.getShip(ShipType.FRIGATE, 1));
+        shipList.add(shipFactory.getShip(ShipType.FRIGATE, 2));
 
         gameRecordWriter.startRecord(shipList);
     }
