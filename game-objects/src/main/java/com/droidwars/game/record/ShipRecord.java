@@ -12,6 +12,7 @@ import java.io.Serializable;
 public class ShipRecord implements Serializable {
 
     private Class<? extends Ship> shipClass;
+    private int teamNumber;
     private Vector2 position;
     private Vector2 facing;
 

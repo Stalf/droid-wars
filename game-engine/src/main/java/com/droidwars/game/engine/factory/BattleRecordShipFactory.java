@@ -37,11 +37,11 @@ public class BattleRecordShipFactory extends AbstractShipFactory {
             Class<? extends Ship> shipClass = value.getShipClass();
             Ship ship;
             try {
-                Constructor<? extends Ship> constructor = shipClass.getConstructor(GameInstance.class, Vector2.class, Vector2.class);
-                ship = constructor.newInstance(gameInstance, value.getPosition(), value.getFacing());
+                Constructor<? extends Ship> constructor = shipClass.getConstructor(GameInstance.class, Vector2.class, Vector2.class, Integer.TYPE);
+                ship = constructor.newInstance(gameInstance, value.getPosition(), value.getFacing(), value.getTeamNumber());
             } catch (InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
                 log.error("Конструктор класса корабля не найден. Создаем абстрактный корбаль", e);
-                ship = new Ship(gameInstance, value.getPosition(), value.getFacing());
+                ship = new Ship(gameInstance, value.getPosition(), value.getFacing(), value.getTeamNumber());
             }
 
             result.put(recordEntry.getKey(), ship);
@@ -51,7 +51,7 @@ public class BattleRecordShipFactory extends AbstractShipFactory {
     }
 
     @Override
-    public Ship getShip(ShipType type) {
-        return null;
+    public Ship getShip(ShipType type, int teamNumber) {
+        throw new UnsupportedOperationException();
     }
 }

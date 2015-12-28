@@ -15,7 +15,7 @@ public class TurnVectorCommandTest extends AbstractGameInstanceTest {
 
     @BeforeMethod
     public void setupTest() {
-        ship = new Ship(gameInstance, new Vector2(0, 0), new Vector2(1, 0));
+        ship = new Ship(gameInstance, new Vector2(0, 0), new Vector2(1, 0), 1);
     }
 
     @DataProvider

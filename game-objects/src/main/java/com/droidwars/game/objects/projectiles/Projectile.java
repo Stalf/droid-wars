@@ -53,6 +53,9 @@ public class Projectile extends AbstractGameObject {
 
         super.update(delta);
 
+        // Увеличиваем скорость
+        this.getVelocity().add(getFacing().x * getAcceleration() * delta, getFacing().y * getAcceleration() * delta);
+
         // Проверяем условия дальности и длительности полета
         if ((this.maxAliveTime > 0) && (this.getAliveTime() > this.maxAliveTime)) {
             this.destroy();

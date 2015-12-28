@@ -23,7 +23,7 @@ public class BattleRecord implements Serializable {
     public BattleRecord(List<Ship> ships) {
 
         for (Ship ship : ships) {
-            this.ships.put(ship.getGameId(), new ShipRecord(ship.getClass(), ship.getPosition().cpy(), ship.getFacing().cpy()));
+            this.ships.put(ship.getGameId(), new ShipRecord(ship.getClass(),  ship.getTeamNumber(), ship.getPosition().cpy(), ship.getFacing().cpy()));
         }
 
     }

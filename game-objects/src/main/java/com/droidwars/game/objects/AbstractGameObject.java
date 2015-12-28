@@ -74,7 +74,7 @@ public abstract class AbstractGameObject implements GameObject {
      */
     protected float delta = 0f;
 
-    public AbstractGameObject(GameInstance gameInstance, Vector2 position, Vector2 facing) {
+    protected AbstractGameObject(GameInstance gameInstance, Vector2 position, Vector2 facing) {
         this.gameInstance = gameInstance;
         this.gameId = gameInstance.getIdGenerator().getNextId();
 
@@ -97,8 +97,6 @@ public abstract class AbstractGameObject implements GameObject {
         this.position.add(velocity.x * delta, velocity.y * delta);
         this.travelDistance += velocity.len() * delta;
 
-        // Увеличиваем скорость
-        this.velocity.add(facing.x * acceleration * delta, facing.y * acceleration * delta);
     }
 
     @Override

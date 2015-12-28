@@ -12,10 +12,10 @@ public class RandomPositionShipFactory extends AbstractShipFactory {
         super(gameInstance);
     }
 
-    public Ship getShip(ShipType type) {
+    public Ship getShip(ShipType type, int teamNumber) {
         switch (type) {
             case FRIGATE: {
-                return new Frigate(getGameInstance(), GameUtils.generateRandomPosition(), GameUtils.generateRandomDirection());
+                return new Frigate(getGameInstance(), GameUtils.generateRandomPosition(), GameUtils.generateRandomDirection(), teamNumber);
             }
             default: {
                 throw new UnsupportedOperationException(String.format("Ship type %s is not supported", type));

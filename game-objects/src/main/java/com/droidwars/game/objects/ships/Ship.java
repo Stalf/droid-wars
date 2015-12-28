@@ -3,10 +3,7 @@ package com.droidwars.game.objects.ships;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.droidwars.game.GameInstance;
-import com.droidwars.game.command.Command;
-import com.droidwars.game.command.CommandExecutor;
-import com.droidwars.game.command.CommandExecutorImpl;
-import com.droidwars.game.command.Manageable;
+import com.droidwars.game.command.*;
 import com.droidwars.game.objects.AbstractGameObject;
 import com.droidwars.game.weaponry.Weapon;
 import com.google.common.collect.ImmutableList;
@@ -15,6 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Абстрактный корабль
@@ -45,6 +43,11 @@ public class Ship extends AbstractGameObject implements Manageable<Ship> {
     private float maxHullPoints = 100;
 
     /**
+     * Номер игровой команды, которой принадлежит данный корабль. Используется для определения свой-чужой и для отрисовки кораблей разных цветов
+     */
+    private int teamNumber = 0;
+
+    /**
      * Список оружейных слотов
      */
     private List<Weapon> weaponSlots = ImmutableList.of();
@@ -55,8 +58,10 @@ public class Ship extends AbstractGameObject implements Manageable<Ship> {
     @Setter(AccessLevel.NONE)
     private CommandExecutor<Ship> commandExecutor = new CommandExecutorImpl<>(this);
 
-    public Ship(GameInstance gameInstance, Vector2 position, Vector2 facing) {
+    public Ship(GameInstance gameInstance, Vector2 position, Vector2 facing, int teamNumber) {
         super(gameInstance, position, facing);
+
+        this.teamNumber = teamNumber;
     }
 
     @Override
@@ -144,5 +149,12 @@ public class Ship extends AbstractGameObject implements Manageable<Ship> {
     @Override
     public void command(Command<Ship> command) {
         commandExecutor.add(command);
+    }
+
+    @Override
+    public void command(Map<CommandType, Command<Ship>> commands) {
+        for (Map.Entry<CommandType, Command<Ship>> command: commands.entrySet()) {
+            command(command.getValue());
+        }
     }
 }

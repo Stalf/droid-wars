@@ -8,8 +8,12 @@ import com.google.common.collect.ImmutableList;
 
 public class Frigate extends Ship {
 
-    public Frigate(GameInstance gameInstance, Vector2 position, Vector2 facing) {
-        super(gameInstance, position, facing);
+    public Frigate(GameInstance gameInstance, Vector2 position, Vector2 facing, int teamNumber) {
+        super(gameInstance, position, facing, teamNumber);
+
+        setMaxHullPoints(2000);
+        setHullPoints(2000);
+
 
         setWeaponSlots(ImmutableList.<Weapon>of(new MissileLauncher(gameInstance)).asList());
 
