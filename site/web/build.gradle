@@ -1,0 +1,25 @@
+plugins {
+    id "org.springframework.boot" version "1.5.7.RELEASE"
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile project(':site:core')
+    compile project(':site:frontend')
+
+    provided "org.projectlombok:lombok:$lombokVersion"
+
+    optional("org.springframework.boot:spring-boot-devtools")
+}
+
+processResources {
+    filesMatching("**/application.properties") {
+        expand(project.properties)
+    }
+}
+
+bootRun {
+    // Watch static resource changes
+    addResources = true
+}

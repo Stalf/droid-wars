@@ -1,0 +1,18 @@
+plugins {
+    id "org.springframework.boot" version "1.5.7.RELEASE"
+}
+
+springBoot {
+    bootRepackage.enabled = false
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-logging')
+    compile project(':game:game-objects')
+
+    provided "org.projectlombok:lombok:$lombokVersion"
+
+    testCompile "org.testng:testng:$testngVersion"
+    testCompile "org.mockito:mockito-core:$mockitoVersion"
+
+}

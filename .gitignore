@@ -67,3 +67,11 @@ atlassian-ide-plugin.xml
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
+
+client/player/player-core/out/
+client/player/player-desktop/out/
+game/game-engine/out/
+game/game-objects/out/
+site/core/out/
+site/web/out/production/classes/
+site/web/out/production/resources/static/

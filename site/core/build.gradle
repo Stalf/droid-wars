@@ -1,0 +1,39 @@
+buildscript {
+    dependencies {
+        classpath "postgresql:postgresql:$postgreslDriverVersion"
+    }
+}
+
+plugins {
+    id 'org.liquibase.gradle' version '1.2.4'
+    id "org.springframework.boot" version "1.5.7.RELEASE"
+}
+
+
+springBoot {
+    bootRepackage.enabled = false
+}
+
+dependencies {
+
+    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    compile("postgresql:postgresql:$postgreslDriverVersion")
+
+    provided "org.projectlombok:lombok:$lombokVersion"
+}
+
+// Execute liquibase update before compiling java code
+compileJava.dependsOn(update)
+
+liquibase {
+    activities {
+        main {
+            changeLogFile "$projectDir/src/main/db/changelog-master.xml"
+            url jdbcUrl
+            username jdbcUsername
+            password jdbcPassword
+        }
+    }
+}

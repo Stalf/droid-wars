@@ -1,11 +1,13 @@
-rootProject.name = 'Droid Wars'
+rootProject.name = 'Droid-Wars'
 
-include 'droidwars-web'
-include 'droidwars-core'
-include 'game-engine'
-include 'game-objects'
+include 'site', 'site:core', 'site:web', 'site:frontend'
+include 'server'
+include 'game', 'game:game-engine', 'game:game-objects'
+
+/*
 include 'player'
 include 'player:player-core'
 include 'player:player-desktop'
+*/
 
 

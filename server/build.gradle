@@ -1,0 +1,19 @@
+plugins {
+    id "org.springframework.boot" version "1.5.7.RELEASE"
+}
+
+version = '0.1'
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+	//compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('javax.validation:validation-api:2.0.0.Final')
+    compile('org.hibernate:hibernate-validator:6.0.2.Final')
+    compile project(':game:game-engine')
+
+    runtime('org.postgresql:postgresql')
+
+    provided "org.projectlombok:lombok:$lombokVersion"
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
