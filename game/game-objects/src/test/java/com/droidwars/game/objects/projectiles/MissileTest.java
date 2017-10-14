@@ -21,7 +21,7 @@ public class MissileTest extends AbstractGameInstanceTest {
     @Test
     public void missileShouldDestroyAfterMaxDistanceTravelled() {
 
-        Missile missile = spy(new Missile(gameInstance, new Vector2(0, 0), new Vector2(1, 0), MISSILE_STARTING_VELOCITY, MISSILE_DAMAGE, MISSILE_MAX_DISTANCE, 0));
+        Missile missile = spy(new Missile(gameInstanceMock, new Vector2(0, 0), new Vector2(1, 0), MISSILE_STARTING_VELOCITY, MISSILE_DAMAGE, MISSILE_MAX_DISTANCE, 0));
 
         float time = 0;
         do {
@@ -42,7 +42,7 @@ public class MissileTest extends AbstractGameInstanceTest {
     @Test
     public void missileShouldDestroyAfterMaxDistanceTravelledAccelerated() {
 
-        Projectile missile = spy(new Missile(gameInstance, new Vector2(0, 0), new Vector2(1, 0), MISSILE_STARTING_VELOCITY, MISSILE_DAMAGE, MISSILE_MAX_DISTANCE, 50));
+        Projectile missile = spy(new Missile(gameInstanceMock, new Vector2(0, 0), new Vector2(1, 0), MISSILE_STARTING_VELOCITY, MISSILE_DAMAGE, MISSILE_MAX_DISTANCE, 50));
 
         float time = 0;
         do {

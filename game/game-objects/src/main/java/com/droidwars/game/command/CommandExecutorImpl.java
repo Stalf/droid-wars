@@ -70,7 +70,7 @@ public class CommandExecutorImpl<T extends GameObject> implements CommandExecuto
             }
 
             // Перед выполнением пишем команду в лог боя
-            subject.getGameInstance().getGameRecordWriter().write(subject, command);
+            subject.getGameInstance().getRecordWriter().write(subject, command);
 
             // Выполняем команду
             command.execute(subject, delta);

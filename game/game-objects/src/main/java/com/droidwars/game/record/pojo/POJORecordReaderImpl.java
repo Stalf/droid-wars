@@ -1,6 +1,6 @@
 package com.droidwars.game.record.pojo;
 
-import com.droidwars.game.record.GameRecordReader;
+import com.droidwars.game.record.RecordReader;
 import com.droidwars.game.record.ShipRecord;
 import com.droidwars.game.record.StepRecord;
 import lombok.extern.slf4j.Slf4j;
@@ -16,11 +16,11 @@ import java.util.Map;
  * Suboptimal (slow and memory-eager), needs refactoring!
  */
 @Slf4j
-public class POJOGameRecordReaderImpl implements GameRecordReader {
+public class POJORecordReaderImpl implements RecordReader {
 
     private BattleRecord battleRecord;
 
-    public POJOGameRecordReaderImpl(InputStream inputStream) {
+    public POJORecordReaderImpl(InputStream inputStream) {
 
         try {
             ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);

@@ -1,22 +1,26 @@
 package com.droidwars.game.engine.utils;
 
 /**
- * Вспомогательный класс с константами
+ * Helper constant class
  */
 public class Constants {
 
     /**
-     * Ширина начальной области карты
+     * Basic visible map width
      */
     public static final int MAP_WIDTH = 800;
     /**
-     * Высота начальной области карты
+     * Basic visible map height
      */
     public static final int MAP_HEIGHT = 480;
 
     /**
-     * Величина атомарного шага игрового цикла - 1/60 секунды.
+     * Size of one atomic time-step - 1/60 секунды.
      */
     public static final float DELTA_STEP = 1.0f/60;
 
+    /**
+     * Maximum time a battle can last
+     */
+    public static final float BATTLE_TIMEOUT = 100f;
 }

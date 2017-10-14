@@ -22,7 +22,7 @@ public class ShipTest extends AbstractGameInstanceTest {
 
     @BeforeMethod
     public void setupTest() {
-        ship = spy(new Ship(gameInstance, new Vector2(0,0), new Vector2(1,0), 1));
+        ship = spy(new Ship(gameInstanceMock, new Vector2(0,0), new Vector2(1,0), 1));
     }
 
     @Test

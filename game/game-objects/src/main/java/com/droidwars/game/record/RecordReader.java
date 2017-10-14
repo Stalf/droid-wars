@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * Интерфейс воспроизведения хода боя
  */
-public interface GameRecordReader {
+public interface RecordReader {
 
     Map<Long, ShipRecord> getShips();
 

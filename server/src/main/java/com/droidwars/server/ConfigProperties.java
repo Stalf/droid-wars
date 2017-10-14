@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.nio.file.Path;
 
 @Configuration
 @ConfigurationProperties(prefix = "droidwars.server")
@@ -14,6 +15,7 @@ public class ConfigProperties {
 
     private String version;
     private Game game;
+    private FileStorage fileStorage;
 
     @Data
     public static class Game {
@@ -34,6 +36,13 @@ public class ConfigProperties {
         @NotNull
         private Integer awaitTerminationSeconds;
 
+    }
+
+    @Data
+    public static class FileStorage {
+
+        @NotNull
+        private Path rootPath;
     }
 
 }

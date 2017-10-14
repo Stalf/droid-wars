@@ -1,14 +1,14 @@
 package com.droidwars.game.record.pojo;
 
 import com.droidwars.game.command.Command;
+import com.droidwars.game.exceptions.GameException;
 import com.droidwars.game.objects.GameObject;
 import com.droidwars.game.objects.ships.Ship;
 import com.droidwars.game.record.BattleRecordMetadata;
-import com.droidwars.game.record.GameRecordWriter;
+import com.droidwars.game.record.RecordWriter;
 import com.droidwars.game.record.StepRecord;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
  * Suboptimal (slow and memory-eager), needs refactoring!
  */
 @Slf4j
-public class POJOGameRecordWriterImpl implements GameRecordWriter {
+public class POJORecordWriterImpl implements RecordWriter {
 
     private BattleRecord battleRecord;
     private BattleRecordMetadata recordMetadata;
@@ -26,14 +26,14 @@ public class POJOGameRecordWriterImpl implements GameRecordWriter {
     private float time = 0f;
 
     @Override
-    public void startRecord(List<Ship> ships) {
+    public void startRecord(BattleRecordMetadata recordMetadata, List<Ship> ships) {
 
         if (log.isTraceEnabled()) {
             log.trace("Start battle recording. Ships: {}", ships);
         }
 
-        recordMetadata = BattleRecordMetadata.newInstance();
-        battleRecord = new BattleRecord(ships);
+        this.recordMetadata = recordMetadata;
+        this.battleRecord = new BattleRecord(ships);
     }
 
     @Override
@@ -67,28 +67,24 @@ public class POJOGameRecordWriterImpl implements GameRecordWriter {
     }
 
     @Override
-    public BattleRecordMetadata stopRecord() {
-        if (log.isTraceEnabled()) {
-            log.trace("Stop battle recording");
-        }
+    public BattleRecordMetadata stopRecord() throws GameException {
+        log.trace("Stop battle recording");
 
         try {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
+            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(recordMetadata.store())) {
                 objectOutputStream.writeObject(battleRecord);
                 objectOutputStream.flush();
             }
-
-            recordMetadata.store(outputStream);
+            return recordMetadata;
 
         } catch (IOException e) {
-            log.error("Ошибка при записи боя в поток", e);
+            throw new GameException("Error writing battleRecord to a stream", e);
         } finally {
             battleRecord = null;
             tmpStep = null;
         }
 
-        return recordMetadata;
     }
+
 }

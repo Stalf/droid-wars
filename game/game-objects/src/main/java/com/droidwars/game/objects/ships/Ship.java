@@ -3,7 +3,7 @@ package com.droidwars.game.objects.ships;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.droidwars.game.GameInstance;
-import com.droidwars.game.command.CommandExecutorImpl;
+import com.droidwars.game.command.*;
 import com.droidwars.game.objects.AbstractGameObject;
 import com.droidwars.game.weaponry.Weapon;
 import com.google.common.collect.ImmutableList;
@@ -86,6 +86,7 @@ public class Ship extends AbstractGameObject implements Manageable<Ship> {
 
     /**
      * Выполняет выстрел
+     *
      * @param slot номер орудийного слота
      */
     public void shoot(int slot) {
@@ -127,7 +128,7 @@ public class Ship extends AbstractGameObject implements Manageable<Ship> {
      */
     public Vector2 randomPointOnShip() {
         return new Vector2(this.getPosition().x + MathUtils.random(-this.getWidth() / 2, this.getWidth() / 2), this.getPosition().y
-                + MathUtils.random(-this.getHeight() / 2, this.getHeight() / 2));
+            + MathUtils.random(-this.getHeight() / 2, this.getHeight() / 2));
     }
 
     /**
@@ -153,7 +154,7 @@ public class Ship extends AbstractGameObject implements Manageable<Ship> {
 
     @Override
     public void command(Map<CommandType, Command<Ship>> commands) {
-        for (Map.Entry<CommandType, Command<Ship>> command: commands.entrySet()) {
+        for (Map.Entry<CommandType, Command<Ship>> command : commands.entrySet()) {
             command(command.getValue());
         }
     }

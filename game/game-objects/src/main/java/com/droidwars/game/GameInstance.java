@@ -1,13 +1,13 @@
 package com.droidwars.game;
 
 import com.droidwars.game.generator.IdGenerator;
-import com.droidwars.game.record.GameRecordWriter;
+import com.droidwars.game.record.RecordWriter;
 
 /**
  * Интерфейс экземпляра контроллера боя
  */
 public interface GameInstance {
-                                 
+
     /**
      * @return экземпляр генератора уникальных идентификаторов
      */
@@ -16,7 +16,7 @@ public interface GameInstance {
     /**
      * @return экземпляр объекта для записи хода боя
      */
-    GameRecordWriter getGameRecordWriter();
+    RecordWriter getRecordWriter();
 
     float getTime();
 }

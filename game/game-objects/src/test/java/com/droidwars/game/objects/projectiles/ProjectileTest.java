@@ -16,7 +16,7 @@ public class ProjectileTest extends AbstractGameInstanceTest {
 
     @BeforeMethod
     public void setupTest() {
-        projectile = spy(new Projectile(gameInstance, new Vector2(0, 0), new Vector2(1, 0)));
+        projectile = spy(new Projectile(gameInstanceMock, new Vector2(0, 0), new Vector2(1, 0)));
     }
 
     @Test

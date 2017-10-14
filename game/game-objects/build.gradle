@@ -10,10 +10,18 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-logging')
     compile "com.badlogicgames.gdx:gdx:$gdxVersion"
     compile "com.google.guava:guava:$guavaVersion"
+    compile "com.fasterxml.uuid:java-uuid-generator:$JUGVersion"
 
     provided "org.projectlombok:lombok:$lombokVersion"
 
     testCompile "org.testng:testng:$testngVersion"
+    testCompile "org.hamcrest:hamcrest-all:$hamcrestVersion"
     testCompile "org.mockito:mockito-core:$mockitoVersion"
+    testCompile "org.exparity:hamcrest-date:$hamcrestDateVersion"
+    testCompile "org.hamcrest:java-hamcrest:$javaHamcrestVersion"
 
+}
+
+test {
+    useTestNG()
 }

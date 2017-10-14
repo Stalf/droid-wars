@@ -1,5 +1,7 @@
 package com.droidwars.server;
 
+import com.droidwars.game.engine.GameInstanceServer;
+import com.droidwars.game.engine.factory.game.AbstractGameInstanceFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,14 +17,16 @@ public class ScheduledTasks {
 
     @Autowired
     private ConfigProperties configProperties;
+
+    @Autowired
+    private AbstractGameInstanceFactory gameInstanceFactory;
+
     @Autowired
     private TaskExecutor taskExecutor;
 
     @Bean
     @Lazy
     public ThreadPoolTaskExecutor taskExecutor() {
-        log.debug("Creating taskExecutor bean");
-
         ThreadPoolTaskExecutor pool = new ThreadPoolTaskExecutor();
         pool.setCorePoolSize(configProperties.getGame().getCoreThreadCount());
         pool.setMaxPoolSize(configProperties.getGame().getMaxThreadCount());
@@ -34,13 +38,16 @@ public class ScheduledTasks {
         return pool;
     }
 
-    @Scheduled(fixedDelay = 10_000)
+    /**
+     * Periodically reads battle calculation requests ans starts their execution
+     */
+    @Scheduled(initialDelay = 10_000, fixedDelay = 10_000)
     public void checkNewBattles() {
         log.debug("Start check new battles task");
 
-        taskExecutor.execute(() -> {
-            log.info("Task executed");
-        });
+        GameInstanceServer gameInstance = gameInstanceFactory.createGameInstance();
+
+        taskExecutor.execute(gameInstance);
 
     }
 

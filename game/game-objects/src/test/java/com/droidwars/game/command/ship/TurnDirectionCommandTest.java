@@ -15,7 +15,7 @@ public class TurnDirectionCommandTest extends AbstractGameInstanceTest {
 
     @BeforeMethod
     public void setupTest() {
-        ship = new Ship(gameInstance, new Vector2(0,0), new Vector2(1,0), 1);
+        ship = new Ship(gameInstanceMock, new Vector2(0,0), new Vector2(1,0), 1);
     }
 
     @DataProvider

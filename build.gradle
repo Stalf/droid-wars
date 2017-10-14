@@ -18,10 +18,15 @@ ext {
 
     gdxVersion = '1.7.0'
     guavaVersion = '18.0'
+    JUGVersion = '3.1.4'
 
     junitVersion = '4.12'
-    testngVersion = '6.1.1'
-    mockitoVersion = '1.10.19'
+    testngVersion = '6.8'
+    hamcrestVersion = '1.3'
+    mockitoVersion = '2.10.0'
+    hamcrestDateVersion = '2.0.4'
+    javaHamcrestVersion = '2.0.0.0'
+    commonsIOVersion = '2.5'
 }
 
 allprojects {
@@ -63,16 +68,23 @@ subprojects {
 }
 
 task webRunWithoutAngularRebuild{
-    group 'application'
+    group 'droid-wars'
     description 'Run web-site, do not rebuild angular application'
     dependsOn ':site:web:bootRun'
 }
 
 task webRun{
-    group 'application'
+    group 'droid-wars'
     description 'Run web-site'
     // Build frontend app before running SpringBoot
     dependsOn(':site:frontend:buildClientDev')
 
     dependsOn ':site:web:bootRun'
+}
+
+task serverRun{
+    group 'droid-wars'
+    description 'Run game execution server'
+
+    dependsOn ':server:bootRun'
 }
