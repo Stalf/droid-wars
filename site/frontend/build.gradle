@@ -18,7 +18,7 @@ task buildClientDev(type: NpmTask, dependsOn: 'npmInstall') {
 
 task buildClientWatch(type: NpmTask, dependsOn: 'npmInstall') {
     group = 'application'
-    description = "Build and watches the client side assets for rebuilding"
+    description = "Build and start watching the client side assets for rebuilding"
     args = ['run', 'buildWatch']
 }
 

@@ -3,9 +3,8 @@ package com.droidwars.game.engine;
 import com.droidwars.game.exceptions.GameException;
 import com.droidwars.game.record.BattleRecordMetadata;
 import com.droidwars.game.record.RecordStorage;
-import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
-import com.fasterxml.uuid.impl.TimeBasedGenerator;
+import com.fasterxml.uuid.impl.RandomBasedGenerator;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -19,8 +18,8 @@ import java.util.UUID;
 @Slf4j
 public class FileStorage implements RecordStorage {
 
-    private static final TimeBasedGenerator uuidGenerator =
-        Generators.timeBasedGenerator(EthernetAddress.fromInterface());
+    private static final RandomBasedGenerator uuidGenerator =
+        Generators.randomBasedGenerator();
 
     private Path rootPath;
 
@@ -28,7 +27,7 @@ public class FileStorage implements RecordStorage {
         this.rootPath = rootPath;
         if (!rootPath.toFile().exists()) {
             try {
-                Files.createDirectory(rootPath);
+                Files.createDirectory(rootPath.toAbsolutePath());
             } catch (IOException e) {
                 throw new RuntimeException("Error creating directory for filestorage", e);
             }
