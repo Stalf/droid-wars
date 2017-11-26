@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableJpaRepositories("com.droidwars.core.repository")
 @ComponentScan("com.droidwars")
-@EntityScan(basePackages = "com.droidwars.entity")
+@EntityScan(basePackages = "com.droidwars.core.entity")
 @Import(SecurityConfiguration.class)
 public class WebApplication {
 
