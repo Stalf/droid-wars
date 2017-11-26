@@ -5,12 +5,17 @@ plugins {
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-security")
     compile project(':site:core')
     compile project(':site:frontend')
 
     provided "org.projectlombok:lombok:$lombokVersion"
 
     optional("org.springframework.boot:spring-boot-devtools")
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile("org.testng:testng:$testngVersion")
+
 }
 
 processResources {
@@ -22,4 +27,8 @@ processResources {
 bootRun {
     // Watch static resource changes
     addResources = true
+}
+
+test {
+    useTestNG()
 }

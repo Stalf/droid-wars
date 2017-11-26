@@ -5,12 +5,39 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 	<changeSet id="kss-1" author="kss">
-		<createTable tableName="users">
-			<column name="id" type="bigint" autoIncrement="true">
-				<constraints primaryKey="true" nullable="false" />
+		<createTable tableName="users" remarks="Registered users">
+			<column name="id" type="bigint" remarks="Identifier">
+				<constraints primaryKey="true" nullable="false" primaryKeyName="pk_users"/>
 			</column>
-			<column name="username" type="varchar(255)" />
+			<column name="username" type="varchar(255)" remarks="Primary field used as login">
+                <constraints unique="true" uniqueConstraintName="uk_users_username"/>
+            </column>
+            <column name="pass" type="varchar(60)" remarks="Salted password">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(254)" remarks="E-mail address"/>
+            <column name="register_date" type="timestamp" remarks="Registration date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enabled" type="boolean" remarks="Flag if user is active">
+                <constraints nullable="false"/>
+            </column>
 		</createTable>
 	</changeSet>
+
+    <changeSet id="kss-2" author="kss">
+        <createSequence sequenceName="users_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+    <!-- Adding preset user admin with password admin -->
+    <changeSet id="kss-3" author="kss">
+        <insert tableName="users">
+            <column name="id" valueComputed="NEXTVAL('USERS_SEQ')"/>
+            <column name="username">admin</column>
+            <column name="pass">$2a$10$1AZiduRGeEXla4gYK5V/A.l7QdHIn4yQEYbT72LJyaLOau6z/wweS</column>
+            <column name="register_date" valueComputed="current_timestamp"/>
+            <column name="enabled">true</column>
+        </insert>
+    </changeSet>
 
 </databaseChangeLog>
