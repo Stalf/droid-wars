@@ -25,14 +25,23 @@ public class FileStorage implements RecordStorage {
 
     public FileStorage(Path rootPath) {
         this.rootPath = rootPath;
+        createRootDirectory(rootPath);
+        log.trace("FileStorage initialized with rootPath = {}", rootPath.toAbsolutePath());
+    }
+
+    /**
+     * Synchronously creates root path directory to ensure only one creation attempt
+     * @param rootPath
+     */
+    private static synchronized void createRootDirectory(Path rootPath) {
         if (!rootPath.toFile().exists()) {
             try {
                 Files.createDirectory(rootPath.toAbsolutePath());
+                log.trace("FileStorage rootPath directory created");
             } catch (IOException e) {
                 throw new RuntimeException("Error creating directory for filestorage", e);
             }
         }
-        log.trace("FileStorage initialized with rootPath = {}", rootPath.toAbsolutePath());
     }
 
     @Override

@@ -54,7 +54,6 @@ public class GameInstanceIntegrationTests extends AbstractTestNGSpringContextTes
 
     @Test
     public void simpleFactoryTest() {
-        log.info("simpleFactoryTest");
         GameInstanceServer gameInstance = gameInstanceFactory.createGameInstance();
         gameInstance.run();
 
@@ -66,10 +65,16 @@ public class GameInstanceIntegrationTests extends AbstractTestNGSpringContextTes
         assertThat(battleFile.toFile(), FileMatchers.anExistingFile());
     }
 
-    @Test
-    public void multipleInstancesTest() {
-        log.info("multipleInstancesTest");
+    @Test(invocationCount = 10, threadPoolSize = 3)
+    public void simpleThreadedFactoryTest() {
+        GameInstanceServer gameInstance = gameInstanceFactory.createGameInstance();
+        gameInstance.run();
 
+        checkBattleRecordExist(gameInstance);
+    }
+
+    @Test
+    public void multipleInstancesExecutorTest() {
         Map<GameInstanceServer, Future> instanceServers = Maps.newHashMap();
 
         for (int i = 0; i < configProperties.getGame().getCoreThreadCount() + 1; i++) {
