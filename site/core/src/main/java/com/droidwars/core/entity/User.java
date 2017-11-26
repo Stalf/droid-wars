@@ -39,6 +39,11 @@ public class User implements UserDetails{
      */
     @Column(length = 60, nullable = false, updatable = false)
     private String pass;
+
+    public String getPass() {
+        return null;
+    }
+
     /**
      * E-mail
      */

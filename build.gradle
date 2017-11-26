@@ -27,6 +27,11 @@ ext {
     hamcrestDateVersion = '2.0.4'
     javaHamcrestVersion = '2.0.0.0'
     commonsIOVersion = '2.5'
+
+    testngVersion = '6.8'
+    dbUnitVersion = '2.5.3'
+    springTestDbUnitVersion = '1.2.0'
+    hsqldbVersion = '2.3.4'
 }
 
 allprojects {

@@ -1,4 +1,4 @@
-package com.droidwars.core.web;
+package com.droidwars.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

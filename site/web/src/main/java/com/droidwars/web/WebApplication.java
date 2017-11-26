@@ -1,4 +1,4 @@
-package com.droidwars.core.web;
+package com.droidwars.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableTransactionManagement
-@EnableJpaRepositories("com.droidwars.repository")
+@EnableJpaRepositories("com.droidwars.core.repository")
 @ComponentScan("com.droidwars")
 @EntityScan(basePackages = "com.droidwars.entity")
 @Import(SecurityConfiguration.class)
