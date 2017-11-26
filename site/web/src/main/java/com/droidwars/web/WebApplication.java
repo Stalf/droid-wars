@@ -1,6 +1,7 @@
 package com.droidwars.web;
 
 import com.droidwars.core.JpaConfig;
+import com.droidwars.core.SecurityConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
