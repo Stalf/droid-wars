@@ -75,3 +75,4 @@ game/game-objects/out/
 site/core/out/
 site/web/out/production/classes/
 site/web/out/production/resources/static/
+/tmp/
