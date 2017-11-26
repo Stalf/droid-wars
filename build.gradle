@@ -93,3 +93,10 @@ task serverRun{
 
     dependsOn ':server:bootRun'
 }
+
+task testAll(type: GradleBuild) {
+    group 'droid-wars'
+    description 'Execute all tests'
+
+    tasks = ['clean', 'test']
+}

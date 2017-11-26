@@ -46,3 +46,7 @@ liquibase {
         }
     }
 }
+
+test {
+    useTestNG()
+}
