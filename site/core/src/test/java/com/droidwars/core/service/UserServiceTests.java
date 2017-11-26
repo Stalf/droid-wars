@@ -39,8 +39,8 @@ public class UserServiceTests extends AbstractTestNGSpringContextTests {
 
         assertEquals("user1", one.getUsername());
         assertEquals(1, one.getId());
+        assertEquals("testpass", one.getPassword());
         assertEquals(LocalDateTime.of(2017, 11, 26, 10, 0, 0), one.getRegisterDate());
-
     }
 
     @Test
@@ -58,7 +58,7 @@ public class UserServiceTests extends AbstractTestNGSpringContextTests {
         assertEquals("user2", one.getUsername());
         assertEquals(true, one.isEnabled());
         assertEquals(true, one.isAccountNonLocked());
-        assertEquals(null, one.getPassword());
+        assertEquals("testpass", one.getPassword());
         assertEquals(null, one.getAuthorities());
     }
 

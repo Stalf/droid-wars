@@ -3,7 +3,6 @@ package com.droidwars.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -15,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private PasswordEncoder bCryptPasswordEncoder;
@@ -24,15 +23,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(authenticationProvider());
-    }
-
-    private DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService);
-        authenticationProvider.setPasswordEncoder(bCryptPasswordEncoder);
-        return null;
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService)
+            .passwordEncoder(bCryptPasswordEncoder)
+            .and().eraseCredentials(true);
     }
 
     @Bean
@@ -45,11 +39,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.
             authorizeRequests()
-            //.antMatchers("/").permitAll()
+            .antMatchers("/").permitAll()
             .antMatchers("/login").permitAll()
-            //.antMatchers("/registration").permitAll()
-            //.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-            //.authenticated()
+            .antMatchers("/registration").permitAll()
+            .antMatchers("/admin/**").hasAuthority("ADMIN")
+            .antMatchers("/current-user").authenticated()
+            .antMatchers("/rest/**").authenticated()
             // TODO at this time CSRF doesn't matter
             .and().csrf().disable()
             .formLogin()
@@ -58,9 +53,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .usernameParameter("username")
             .passwordParameter("pass")
             .and().logout()
-            //.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
             .logoutSuccessUrl("/")
-            //.and().exceptionHandling().accessDeniedPage("/access-denied")
+            .and().exceptionHandling().accessDeniedPage("/access-denied")
         ;
     }
 
