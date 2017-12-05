@@ -4,7 +4,8 @@ import {StatisticsComponent} from './pages/statistics/statistics.component';
 import {PageNotFoundComponent} from './common/page-not-found/page-not-found.component';
 import {FaqComponent} from './pages/faq/faq.component';
 import {MainComponent} from './pages/main/main.component';
-import {AuthGuardService} from './common/auth/auth-guard.service';
+import {AuthGuardService} from './services/auth-guard.service';
+import {RegisterComponent} from './pages/register/register.component';
 
 const appRoutes: Routes = [
     {
@@ -15,6 +16,9 @@ const appRoutes: Routes = [
     },
     {
         path: 'faq', component: FaqComponent
+    },
+    {
+        path: 'register', component: RegisterComponent
     },
     {
         path: 'admin',

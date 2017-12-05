@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
-import {LoginComponent} from '../auth/login/login.component';
+import {LoginComponent} from '../../pages/login/login.component';
 
 @Component({
     selector: 'app-top-menu',
