@@ -6,6 +6,8 @@ import {FaqComponent} from './pages/faq/faq.component';
 import {MainComponent} from './pages/main/main.component';
 import {AuthGuardService} from './services/auth-guard.service';
 import {RegisterComponent} from './pages/register/register.component';
+import {SuccessfulRegisterComponent} from './pages/successful-register/successful-register.component';
+import {SuccessfulRegisterGuardService} from './pages/successful-register/successful-register-guard.service';
 
 const appRoutes: Routes = [
     {
@@ -19,6 +21,11 @@ const appRoutes: Routes = [
     },
     {
         path: 'register', component: RegisterComponent
+    },
+    {
+        path: 'register-success',
+        canActivate: [SuccessfulRegisterGuardService],
+        component: SuccessfulRegisterComponent
     },
     {
         path: 'admin',

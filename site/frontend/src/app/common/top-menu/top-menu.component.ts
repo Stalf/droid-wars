@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
-import {BsModalRef, BsModalService} from 'ngx-bootstrap';
+import {BsModalService} from 'ngx-bootstrap';
 import {LoginComponent} from '../../pages/login/login.component';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
     selector: 'app-top-menu',
@@ -9,12 +10,11 @@ import {LoginComponent} from '../../pages/login/login.component';
 })
 export class TopMenuComponent {
 
-    modalRef: BsModalRef;
-
-    constructor(private modalService: BsModalService) {
+    constructor(private modalService: BsModalService,
+                private authService: AuthService) {
     }
 
     loginModal() {
-        this.modalRef = this.modalService.show(LoginComponent, {class: "modal-md"});
+        this.modalService.show(LoginComponent, {class: 'modal-md'});
     }
 }

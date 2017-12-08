@@ -12,10 +12,14 @@
         </li>
     </ul>
     <ul class="navbar-nav navbar-right">
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="authService.isAuthenticated()">
             <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin Console</a>
         </li>
-        <li (click)="loginModal()" class="nav-link text-bold text-white no-underline ml-5" id="login"><span class="oi oi-person"></span> Login</li>
-        <li><a routerLink="/register" class="nav-link text-bold text-white no-underline"><span class="oi oi-account-login"></span> Sign Up</a></li>
+        <li *ngIf="authService.isAuthenticated()" class="nav-link text-bold text-white no-underline ml-5 btn-auth"><span class="oi oi-person pr-2"></span>{{authService.userName()}}</li>
+        <li (click)="loginModal()" *ngIf="authService.isAnonymous()" class="nav-link text-bold text-white no-underline ml-5 btn-auth"><span class="oi oi-person pr-2"></span>Login</li>
+        <li *ngIf="authService.isAnonymous()"><a routerLink="/register" class="nav-link text-bold text-white no-underline"><span class="oi oi-account-login pr-2"></span>Sign Up</a></li>
+        <li *ngIf="authService.isAuthenticated()" (click)="authService.logout()" class="nav-link text-bold text-white no-underline ml-5 btn-auth"><span class="oi oi-account-logout pr-2"></span> Logout</li>
     </ul>
 </header>
+
+

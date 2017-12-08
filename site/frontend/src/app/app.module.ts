@@ -19,6 +19,8 @@ import {MockBackend} from '@angular/http/testing';
 import {fakeBackendProvider} from './common/helpers/fake-backend';
 import {RegisterComponent} from './pages/register/register.component';
 import {UserService} from './services/user.service';
+import {SuccessfulRegisterComponent} from './pages/successful-register/successful-register.component';
+import {SuccessfulRegisterGuardService} from './pages/successful-register/successful-register-guard.service';
 
 @NgModule({
     declarations: [
@@ -29,7 +31,8 @@ import {UserService} from './services/user.service';
         FaqComponent,
         TopMenuComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        SuccessfulRegisterComponent
     ],
     imports: [
         BrowserModule,
@@ -40,8 +43,9 @@ import {UserService} from './services/user.service';
         AppRoutingModule
     ],
     providers: [AuthGuardService,
-        AuthService,
         UserService,
+        SuccessfulRegisterGuardService,
+        AuthService,
         // providers used to create fake backend
         fakeBackendProvider,
         MockBackend,
@@ -53,4 +57,6 @@ import {UserService} from './services/user.service';
 })
 export class AppModule {
 
+    constructor(public authService: AuthService) {
+    }
 }

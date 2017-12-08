@@ -33,3 +33,11 @@ task ngServe(type: NpmTask, dependsOn: 'npmInstall') {
     description = "Run only frontend part on NodeJS basis"
     args = ['run', 'start']
 }
+
+task ngLint(type: NpmTask, dependsOn: 'npmInstall') {
+    group = 'application'
+    description = "Run codelyzer"
+    args = ['run', 'lint']
+}
+
+test.dependsOn ngLint;

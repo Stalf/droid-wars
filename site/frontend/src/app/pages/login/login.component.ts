@@ -9,7 +9,6 @@ import {BsModalRef} from 'ngx-bootstrap';
 export class LoginComponent {
     model: any = {};
     loading = false;
-    returnUrl: string;
 
     constructor(
         private modalRef: BsModalRef,
@@ -23,6 +22,8 @@ export class LoginComponent {
             .subscribe(
                 data => {
                     console.log(this.authService.currentUser);
+                    this.modalRef.hide();
+                    this.router.navigate(['/main']);
                 },
                 error => {
                     console.log(error);
