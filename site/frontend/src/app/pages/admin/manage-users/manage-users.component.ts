@@ -1,13 +1,25 @@
 import {Component, OnInit} from '@angular/core';
+import {UserService} from '../../../services/user.service';
+import {User} from '../../../common/models/user';
 
 @Component({
-  templateUrl: './manage-users.component.html'
+    templateUrl: './manage-users.component.html'
 })
 export class ManageUsersComponent implements OnInit {
 
-  constructor() { }
+    users: User[] = [];
 
-  ngOnInit() {
-  }
+    constructor(private userService: UserService) {
+    }
+
+    ngOnInit() {
+        this.loadAllUsers();
+    }
+
+    private loadAllUsers() {
+        this.userService.getAll().subscribe(users => {
+            this.users = users;
+        });
+    }
 
 }

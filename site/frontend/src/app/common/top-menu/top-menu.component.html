@@ -2,7 +2,7 @@
     <a class="navbar-brand" routerLink="">Droid Wars</a>
     <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-            <a class="nav-link" routerLink="/main" routerLinkActive="active">Home</a>
+            <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" routerLink="/statistics" routerLinkActive="active">Statistics</a>
@@ -12,13 +12,13 @@
         </li>
     </ul>
     <ul class="navbar-nav navbar-right">
-        <li class="nav-item" *ngIf="authService.isAuthenticated()">
+        <li class="nav-item" *ngIf="authService.isAdmin()">
             <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin Console</a>
         </li>
-        <li *ngIf="authService.isAuthenticated()" class="nav-link text-bold text-white no-underline ml-5 btn-auth"><span class="oi oi-person pr-2"></span>{{authService.userName()}}</li>
+        <li *ngIf="authService.isAuthenticated()" class="nav-link text-bold text-white no-underline ml-5 btn-auth"><span class="oi oi-person pr-2"></span>{{authService.getUserName()}}</li>
         <li (click)="loginModal()" *ngIf="authService.isAnonymous()" class="nav-link text-bold text-white no-underline ml-5 btn-auth"><span class="oi oi-person pr-2"></span>Login</li>
         <li *ngIf="authService.isAnonymous()"><a routerLink="/register" class="nav-link text-bold text-white no-underline"><span class="oi oi-account-login pr-2"></span>Sign Up</a></li>
-        <li *ngIf="authService.isAuthenticated()" (click)="authService.logout()" class="nav-link text-bold text-white no-underline ml-5 btn-auth"><span class="oi oi-account-logout pr-2"></span> Logout</li>
+        <li *ngIf="authService.isAuthenticated()" (click)="logout()" class="nav-link text-bold text-white no-underline ml-5 btn-auth"><span class="oi oi-account-logout pr-2"></span> Logout</li>
     </ul>
 </header>
 

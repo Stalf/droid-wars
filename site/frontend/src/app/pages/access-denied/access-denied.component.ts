@@ -1,14 +1,13 @@
 import {Component} from '@angular/core';
-import {BsModalService} from 'ngx-bootstrap';
-import {LoginComponent} from '../../pages/login/login.component';
 import {AuthService} from '../../services/auth.service';
+import {LoginComponent} from '../login/login.component';
+import {BsModalService} from 'ngx-bootstrap';
 
 @Component({
-    selector: 'app-top-menu',
-    styleUrls: ['./top-menu.component.scss'],
-    templateUrl: './top-menu.component.html'
+    templateUrl: './access-denied.component.html',
+    styleUrls: ['./access-denied.component.scss']
 })
-export class TopMenuComponent {
+export class AccessDeniedComponent {
 
     constructor(private modalService: BsModalService,
                 private authService: AuthService) {
@@ -18,7 +17,4 @@ export class TopMenuComponent {
         this.modalService.show(LoginComponent, {class: 'modal-md'});
     }
 
-    logout() {
-        this.authService.logout();
-    }
 }

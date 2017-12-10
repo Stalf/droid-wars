@@ -7,7 +7,7 @@ export class SuccessfulRegisterGuardService implements CanActivate {
 
     // Permits navigation to /register-success page only if username param exists
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        return !!route.params.get('username');
+        return !!route.params['username'];
     }
 
   constructor() { }

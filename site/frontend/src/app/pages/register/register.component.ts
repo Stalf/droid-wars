@@ -9,7 +9,9 @@ import {Router} from '@angular/router';
 })
 export class RegisterComponent {
     model: User = new User();
+
     loading = false;
+    error: String = null;
 
     constructor(private userService: UserService,
                 private router: Router) {
@@ -17,14 +19,19 @@ export class RegisterComponent {
 
     register() {
         this.loading = true;
+        this.error = null;
         this.userService.create(this.model)
             .subscribe(
                 data => {
-                    console.log(data);
                     this.router.navigate(['/register-success', {username: this.model.username, email: this.model.email}]);
                 },
                 error => {
-                    console.log(error);
+                    const errorBody = JSON.parse(error._body);
+                    if (errorBody.message) {
+                        this.error = errorBody.message;
+                    } else {
+                        this.error = error.status;
+                    }
                     this.loading = false;
                 }
             );

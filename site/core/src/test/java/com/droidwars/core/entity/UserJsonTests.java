@@ -2,6 +2,7 @@ package com.droidwars.core.entity;
 
 import com.droidwars.core.context.JsonTestContext;
 import lombok.extern.slf4j.Slf4j;
+import org.mockito.internal.util.collections.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +28,8 @@ public class UserJsonTests extends AbstractTestNGSpringContextTests {
     @Test
     public void serialize() throws IOException {
         User user = new User(1L, "user1", "pass1", "email1",
-            LocalDateTime.of(2017, 1, 1, 10, 0, 0), true);
+            LocalDateTime.of(2017, 1, 1, 10, 0, 0), true, Sets.newSet(Role.ADMIN),
+            LocalDateTime.of(2017, 2, 1, 10, 0, 0));
 
         JsonContent<User> jsonContent = this.json.write(user);
         assertThat(jsonContent).extractingJsonPathNumberValue("@.id").isEqualTo(1);
@@ -37,6 +39,8 @@ public class UserJsonTests extends AbstractTestNGSpringContextTests {
         assertThat(jsonContent).extractingJsonPathStringValue("@.pass").isNullOrEmpty();
         assertThat(jsonContent).extractingJsonPathStringValue("@.password").isNullOrEmpty();
         assertThat(jsonContent).extractingJsonPathStringValue("@.email").isNullOrEmpty();
+        assertThat(jsonContent).doesNotHaveJsonPathValue("@.roles");
+        assertThat(jsonContent).doesNotHaveJsonPathValue("@.passwordResetDate");
     }
 
     /**
@@ -52,6 +56,8 @@ public class UserJsonTests extends AbstractTestNGSpringContextTests {
             "  \"password\": \"testpass2\",\n" +
             "  \"email\": \"email2\",\n" +
             "  \"registerDate\": [2017,11,26,21,10,42,719000000],\n" +
+            "  \"passwordResetDate\": [2017,12,26,21,10,42,719000000],\n" +
+            "  \"roles\": [\"ROLE_ADMIN\"],\n" +
             "  \"enabled\": \"true\"\n" +
             "}");
 
@@ -60,8 +66,10 @@ public class UserJsonTests extends AbstractTestNGSpringContextTests {
         assertThat(user.getEmail()).isNull();
         assertThat(user.getUsername()).isNull();
         assertThat(user.getPass()).isNull();
-        assertThat(user.getPassword()).isNull();
+        assertThat(user.getPass()).isNull();
         assertThat(user.getRegisterDate()).isNull();
+        assertThat(user.getPasswordResetDate()).isNull();
+        assertThat(user.getRoles()).isNullOrEmpty();
     }
 
 }

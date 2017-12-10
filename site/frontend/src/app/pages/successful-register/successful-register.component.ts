@@ -5,7 +5,6 @@ import {ActivatedRoute} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-    selector: 'app-successful-register',
     templateUrl: './successful-register.component.html',
     styleUrls: ['./successful-register.component.scss']
 })
@@ -17,8 +16,8 @@ export class SuccessfulRegisterComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.model.username = this.route.snapshot.params.get('username');
-        this.model.email = this.route.snapshot.params.get('email');
+        this.model.username = this.route.snapshot.params['username'];
+        this.model.email = this.route.snapshot.params['email'];
     }
 
     loginModal(username: string) {

@@ -6,7 +6,8 @@
 </div>
 <div class="modal-body">
     <div class="card card-body bg-light">
-        <form name="loginForm" (ngSubmit)="loginForm.form.valid && login()" #loginForm="ngForm" [ngClass]="{ 'was-validated': loginForm.submitted}"
+        <form name="loginForm" (ngSubmit)="loginForm.form.valid && login()" #loginForm="ngForm"
+              [ngClass]="{ 'was-validated': loginForm.submitted}"
               novalidate>
             <div class="form-group"
                  [ngClass]="{ 'is-invalid': loginForm.submitted && !username.valid }">
@@ -27,11 +28,24 @@
                 </div>
             </div>
             <div class="form-group">
-                <button [disabled]="loading" class="btn btn-success btn-block">Login</button>
-                <img *ngIf="loading"
-                     src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+                <div class="submit-group">
+                    <div *ngIf="loading" class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning text-dark"
+                             role="progressbar"
+                             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">Logging...
+                        </div>
+                    </div>
+                    <button *ngIf="!loading" class="btn btn-success btn-block">Login</button>
+                </div>
+                <div *ngIf="error" class="alert alert-danger">
+                    <h4>There was an error</h4>
+                    <p>Unable to log you in a Droid Wars account. Server returned an error: <strong>{{error}}</strong>.
+                        If you need help - contact our <a href="mailto:kssgel@yandex.ru">support team</a></p>
+                </div>
                 <button type="button" class="btn btn-link">Forgot Password</button>
-                <button type="button" class="btn btn-link float-right" routerLink="/register" (click)="modalRef.hide()">Register</button>
+                <button type="button" class="btn btn-link float-right" routerLink="/register" (click)="modalRef.hide()">
+                    Register
+                </button>
             </div>
         </form>
     </div>

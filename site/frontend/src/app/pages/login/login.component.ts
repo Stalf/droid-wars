@@ -4,29 +4,36 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {BsModalRef} from 'ngx-bootstrap';
 
 @Component({
-  templateUrl: './login.component.html'
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
     model: any = {};
-    loading = false;
+    loading: boolean = false;
+    error: String = null;
 
-    constructor(
-        private modalRef: BsModalRef,
-        private route: ActivatedRoute,
-        private router: Router,
-        private authService: AuthService) { }
+    constructor(private modalRef: BsModalRef,
+                private route: ActivatedRoute,
+                private router: Router,
+                private authService: AuthService) {
+    }
 
     login() {
         this.loading = true;
+        this.error = null;
         this.authService.login(this.model.username, this.model.password)
             .subscribe(
                 data => {
-                    console.log(this.authService.currentUser);
                     this.modalRef.hide();
-                    this.router.navigate(['/main']);
+                    this.router.navigate(['/home']);
                 },
                 error => {
-                    console.log(error);
+                    const errorBody = JSON.parse(error._body);
+                    if (errorBody.message) {
+                        this.error = errorBody.message;
+                    } else {
+                        this.error = error.status;
+                    }
                     this.loading = false;
                 });
     }

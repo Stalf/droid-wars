@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-	<changeSet id="kss-1" author="kss">
-		<createTable tableName="users" remarks="Registered users">
-			<column name="id" type="bigint" remarks="Identifier">
-				<constraints primaryKey="true" nullable="false" primaryKeyName="pk_users"/>
-			</column>
-			<column name="username" type="varchar(255)" remarks="Primary field used as login">
+    <changeSet id="kss-1" author="kss">
+        <createTable tableName="users" remarks="Registered users">
+            <column name="id" type="bigint" remarks="Identifier">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_users"/>
+            </column>
+            <column name="username" type="varchar(255)" remarks="Primary field used as login">
                 <constraints unique="true" uniqueConstraintName="uk_users_username"/>
             </column>
             <column name="pass" type="varchar(60)" remarks="Salted password">
@@ -22,8 +22,8 @@
             <column name="enabled" type="boolean" remarks="Flag if user is active">
                 <constraints nullable="false"/>
             </column>
-		</createTable>
-	</changeSet>
+        </createTable>
+    </changeSet>
 
     <changeSet id="kss-2" author="kss">
         <createSequence sequenceName="users_seq" startValue="1" incrementBy="1"/>
@@ -38,6 +38,72 @@
             <column name="register_date" valueComputed="current_timestamp"/>
             <column name="enabled">true</column>
         </insert>
+    </changeSet>
+
+    <changeSet id="kss-4" author="kss">
+        <createTable tableName="roles" remarks="Security roles">
+            <column name="code" type="char(16)" remarks="Role code enum">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_roles"/>
+            </column>
+            <column name="name" type="varchar(30)" remarks="User-readable role name">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="kss-5" author="kss">
+        <insert tableName="roles">
+            <column name="code">ROLE_USER</column>
+            <column name="name">Player</column>
+        </insert>
+        <insert tableName="roles">
+            <column name="code">ROLE_ADMIN</column>
+            <column name="name">Administrator</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="kss-6" author="kss">
+        <createTable tableName="user_roles" remarks="User-role mapping">
+            <column name="user_id" type="bigint" remarks="User"/>
+            <column name="role_code" type="char(16)" remarks="Role"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="kss-7" author="kss">
+        <addForeignKeyConstraint baseTableName="user_roles" baseColumnNames="user_id"
+                                 constraintName="fk_user_roles_users"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="kss-8" author="kss">
+        <addForeignKeyConstraint baseTableName="user_roles" baseColumnNames="role_code"
+                                 constraintName="fk_user_roles_roles"
+                                 referencedTableName="roles"
+                                 referencedColumnNames="code"/>
+    </changeSet>
+
+    <changeSet id="kss-9" author="kss">
+        <insert tableName="user_roles">
+            <column name="user_id" valueComputed="(select id from users where username='admin')"/>
+            <column name="role_code">ROLE_ADMIN</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="kss-10" author="kss">
+        <addColumn tableName="users">
+            <column name="password_reset_date" type="timestamp" remarks="Last password reset date"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="kss-11" author="kss">
+        <update tableName="users">
+            <column name="password_reset_date" valueComputed="current_timestamp"/>
+        </update>
+    </changeSet>
+
+    <changeSet id="kss-12" author="kss">
+        <addNotNullConstraint tableName="users" columnName="password_reset_date"/>
     </changeSet>
 
 </databaseChangeLog>

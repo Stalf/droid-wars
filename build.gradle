@@ -17,7 +17,7 @@ ext {
     postgreslDriverVersion = '9.1-901.jdbc4'
 
     gdxVersion = '1.7.0'
-    guavaVersion = '18.0'
+    guavaVersion = '23.5-jre'
     JUGVersion = '3.1.4'
 
     junitVersion = '4.12'
@@ -84,7 +84,7 @@ task webRun{
     // Build frontend app before running SpringBoot
     dependsOn(':site:frontend:buildClientDev')
 
-    dependsOn ':site:web:bootRun'
+    dependsOn(':site:web:bootRun')
 }
 
 task serverRun{

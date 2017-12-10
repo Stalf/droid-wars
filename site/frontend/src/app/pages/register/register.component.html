@@ -3,29 +3,53 @@
         <div class="col-6 align-self-center mt-5 offset-md-3">
             <div class="card card-body bg-light">
                 <h2>Register</h2>
-                <form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" [ngClass]="{ 'was-validated': f.submitted}" novalidate>
-                    <div class="form-group" [ngClass]="{ 'is-invalid': f.submitted && !username.valid }">
+                <form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm"
+                      [ngClass]="{ 'was-validated': f.submitted}" novalidate>
+                    <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" class="form-control" name="username" id="username" [(ngModel)]="model.username"
-                               #username="ngModel" required/>
-                        <div *ngIf="f.submitted && !username.valid" class="invalid-feedback">Username is required</div>
+                        <input type="text" class="form-control" name="username" id="username"
+                               [(ngModel)]="model.username"
+                               #username="ngModel" required minlength="3" appNativeValidity/>
+                        <div *ngIf="f.submitted && username.errors?.minlength" class="invalid-feedback">Username should consist of at least 3 symbols</div>
+                        <div *ngIf="f.submitted && username.errors?.required" class="invalid-feedback">Username is required</div>
                     </div>
-                    <div class="form-group" [ngClass]="{ 'is-invalid': f.submitted && !email.valid }">
+                    <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" class="form-control" name="email" id="email" [(ngModel)]="model.email"
-                               #email="ngModel" required/>
-                        <div *ngIf="f.submitted && !email.valid" class="invalid-feedback">Email address is required</div>
+                               #email="ngModel" required appNativeValidity/>
+                        <div *ngIf="f.submitted && !email.valid" class="invalid-feedback">Email address is required
+                        </div>
                     </div>
-                    <div class="form-group" [ngClass]="{ 'is-invalid': f.submitted && !password.valid }">
+                    <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" name="password" id="password" [(ngModel)]="model.password"
-                               #password="ngModel" required/>
+                        <input type="password" class="form-control"
+                               name="password" id="password"
+                               [(ngModel)]="model.password"
+                               #password="ngModel"
+                               required/>
                         <div *ngIf="f.submitted && !password.valid" class="invalid-feedback">Password is required</div>
                     </div>
-                    <div class="form-group mt-4">
-                        <button [disabled]="loading" class="btn btn-primary btn-block">Register</button>
-                        <img *ngIf="loading"
-                             src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" class="form-control"
+                               name="confirmPassword" id="confirmPassword"
+                               [(ngModel)]="model.confirmPassword"
+                               #confirmPassword="ngModel"
+                               required [equalTo]="password" appNativeValidity/>
+                        <div *ngIf="f.submitted && confirmPassword.errors?.required" class="invalid-feedback">Please confirm your password</div>
+                        <div *ngIf="f.submitted && confirmPassword.errors?.equalTo && !confirmPassword.errors?.required" class="invalid-feedback">Passwords don't match</div>
+                    </div>
+                    <div *ngIf="error" class="alert alert-danger">
+                        <h4>There was an error</h4>
+                        <p>We wasn't able to create a new Droid Wars account for you. Server returned an error: <strong>{{error}}</strong>.
+                            If you need help - contact our <a href="mailto:kssgel@yandex.ru">support team</a></p>
+                    </div>
+                    <div class="form-group mt-4 submit-group">
+                        <div *ngIf="loading" class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning text-dark" role="progressbar"
+                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">Registering user...</div>
+                        </div>
+                        <button *ngIf="!loading" class="btn btn-primary btn-block">Register</button>
                     </div>
                 </form>
             </div>

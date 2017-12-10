@@ -1,0 +1,9 @@
+<div class="card">
+    <h3 class="card-header bg-warning">
+        Access denied
+    </h3>
+    <div class="card-body">
+        <p class="card-text">To access this page you need to be logged in with an appropriate Droid Wars account.</p>
+        <a *ngIf="authService.isAnonymous()" (click)="loginModal()" class="btn btn-success text-white">Login</a>
+    </div>
+</div>

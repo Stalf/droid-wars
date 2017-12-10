@@ -4,35 +4,38 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {ModalModule} from 'ngx-bootstrap/modal';
 
 import {AppComponent} from './app.component';
-import {PageNotFoundComponent} from './common/page-not-found/page-not-found.component';
+import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
 import {StatisticsComponent} from './pages/statistics/statistics.component';
-import {MainComponent} from './pages/main/main.component';
 import {FaqComponent} from './pages/faq/faq.component';
 import {TopMenuComponent} from './common/top-menu/top-menu.component';
 import {LoginComponent} from './pages/login/login.component';
 import {AppRoutingModule} from './app-routing.module';
-import {AuthGuardService} from './services/auth-guard.service';
+import {AdminGuardService} from './pages/admin/admin-guard.service';
 import {AuthService} from './services/auth.service';
 import {FormsModule} from '@angular/forms';
 import {BaseRequestOptions, HttpModule} from '@angular/http';
-import {MockBackend} from '@angular/http/testing';
-import {fakeBackendProvider} from './common/helpers/fake-backend';
 import {RegisterComponent} from './pages/register/register.component';
 import {UserService} from './services/user.service';
 import {SuccessfulRegisterComponent} from './pages/successful-register/successful-register.component';
 import {SuccessfulRegisterGuardService} from './pages/successful-register/successful-register-guard.service';
+import {AccessDeniedComponent} from './pages/access-denied/access-denied.component';
+import {HomeComponent} from './pages/home/home.component';
+import {CustomFormsModule} from 'ng2-validation';
+import {NativeValidityDirective} from './common/directives/native-validity.directive';
 
 @NgModule({
     declarations: [
         AppComponent,
         PageNotFoundComponent,
         StatisticsComponent,
-        MainComponent,
         FaqComponent,
         TopMenuComponent,
         LoginComponent,
         RegisterComponent,
-        SuccessfulRegisterComponent
+        SuccessfulRegisterComponent,
+        AccessDeniedComponent,
+        HomeComponent,
+        NativeValidityDirective
     ],
     imports: [
         BrowserModule,
@@ -40,15 +43,16 @@ import {SuccessfulRegisterGuardService} from './pages/successful-register/succes
         BsDropdownModule.forRoot(),
         ModalModule.forRoot(),
         FormsModule,
+        CustomFormsModule,
         AppRoutingModule
     ],
-    providers: [AuthGuardService,
+    providers: [AdminGuardService,
         UserService,
         SuccessfulRegisterGuardService,
         AuthService,
         // providers used to create fake backend
-        fakeBackendProvider,
-        MockBackend,
+        // fakeBackendProvider,
+        // MockBackend,
         BaseRequestOptions],
     bootstrap: [AppComponent],
     entryComponents: [
