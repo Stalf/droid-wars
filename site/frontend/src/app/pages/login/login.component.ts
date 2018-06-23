@@ -9,7 +9,7 @@ import {BsModalRef} from 'ngx-bootstrap';
 })
 export class LoginComponent {
     model: any = {};
-    loading: boolean = false;
+    loading = false;
     error: String = null;
 
     constructor(private modalRef: BsModalRef,

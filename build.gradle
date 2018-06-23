@@ -12,7 +12,7 @@ buildscript {
 }
 
 ext {
-    lombokVersion = '1.16.18'
+    lombokVersion = '1.18.0'
 
     postgreslDriverVersion = '9.1-901.jdbc4'
 
