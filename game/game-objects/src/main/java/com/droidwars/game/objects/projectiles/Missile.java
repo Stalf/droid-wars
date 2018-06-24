@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.droidwars.game.GameInstance;
 
 /**
- * Ракетный класс снарядов
+ * Rocket-class projectiles
  */
 public class Missile extends Projectile {
 

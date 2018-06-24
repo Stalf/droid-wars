@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.droidwars.game.AbstractGameInstanceTest;
 import com.droidwars.game.TestConstants;
 import com.droidwars.game.objects.ships.Ship;
+import com.droidwars.game.objects.ships.TestShip;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -15,7 +16,7 @@ public class TurnVectorCommandTest extends AbstractGameInstanceTest {
 
     @BeforeMethod
     public void setupTest() {
-        ship = new Ship(gameInstanceMock, new Vector2(0, 0), new Vector2(1, 0), 1);
+        ship = new TestShip(gameInstanceMock, new Vector2(0, 0), new Vector2(1, 0), 1);
     }
 
     @DataProvider
@@ -23,7 +24,8 @@ public class TurnVectorCommandTest extends AbstractGameInstanceTest {
         return new Object[][]{
                 {new Vector2(0, 1), 9},
                 {new Vector2(0, -1), 9},
-                {new Vector2(-1, 0), 18}
+            {new Vector2(-1, 0), 18},
+            {new Vector2(-1, 0), 30}
         };
     }
 
@@ -39,9 +41,6 @@ public class TurnVectorCommandTest extends AbstractGameInstanceTest {
 
             ship.update(STEP);
 
-            if (ship.getFacing().equals(direction)) {
-                Assert.assertEquals(time, turnTime, TestConstants.EPSILON);
-            }
         } while (time < turnTime);
 
         Assert.assertEquals(ship.getFacing().x, direction.x, TestConstants.EPSILON);

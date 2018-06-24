@@ -7,15 +7,15 @@ import com.droidwars.game.objects.ships.Ship;
 import lombok.NonNull;
 
 /**
- * Команда на поворот корабля
+ * Command to rotate a ship
  */
 public class TurnVectorCommand implements Command<Ship> {
 
     private Vector2 direction;
 
     /**
-     * Поворачивает корабль в направлении вектора. Учитывает максимальную скорость поворота корабля.
-     * @param direction целевой вектор направления
+     * Rotates a ship in Vector direction with maximum possible rotation speed per tick.
+     * @param direction target direction vector
      */
     public TurnVectorCommand(@NonNull Vector2 direction) {
         this.direction = direction;

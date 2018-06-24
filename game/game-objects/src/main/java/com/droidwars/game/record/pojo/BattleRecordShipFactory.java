@@ -3,6 +3,7 @@ package com.droidwars.game.record.pojo;
 import com.badlogic.gdx.math.Vector2;
 import com.droidwars.game.GameInstance;
 import com.droidwars.game.factory.GameObjectFactory;
+import com.droidwars.game.objects.ships.FantomShip;
 import com.droidwars.game.objects.ships.Ship;
 import com.droidwars.game.record.ShipRecord;
 import com.google.common.collect.Maps;
@@ -15,7 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 /**
- * Фабрика создает корабли в том состоянии, в котором они были сохранены в записи о бое
+ * Factory creates ships in a state they were in the battle record
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -25,8 +26,8 @@ public class BattleRecordShipFactory implements GameObjectFactory {
     private GameInstance gameInstance;
 
     /**
-     * @param shipRecordMap запись о бое с исходными данными кораблей
-     * @return Map c новыми кораблями. Ключем является gameId кораблей
+     * @param shipRecordMap battle record with raw ships data
+     * @return Map with ships, gameId as a key
      */
     public Map<Long, Ship> getShips(Map<Long, ShipRecord> shipRecordMap) {
         Map<Long, Ship> result = Maps.newHashMap();
@@ -40,8 +41,8 @@ public class BattleRecordShipFactory implements GameObjectFactory {
                 Constructor<? extends Ship> constructor = shipClass.getConstructor(GameInstance.class, Vector2.class, Vector2.class, Integer.TYPE);
                 ship = constructor.newInstance(gameInstance, value.getPosition(), value.getFacing(), value.getTeamNumber());
             } catch (InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
-                log.error("Конструктор класса корабля не найден. Создаем абстрактный корбаль", e);
-                ship = new Ship(gameInstance, value.getPosition(), value.getFacing(), value.getTeamNumber());
+                log.error("Ship class constructor not found. Creating fantom ship", e);
+                ship = new FantomShip(gameInstance, value.getPosition(), value.getFacing(), value.getTeamNumber());
             }
 
             result.put(recordEntry.getKey(), ship);

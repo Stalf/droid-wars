@@ -3,10 +3,15 @@ package com.droidwars.game.objects.ships;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.droidwars.game.GameInstance;
-import com.droidwars.game.command.*;
+import com.droidwars.game.command.Command;
+import com.droidwars.game.command.CommandExecutor;
+import com.droidwars.game.command.CommandExecutorImpl;
+import com.droidwars.game.command.CommandType;
+import com.droidwars.game.command.Manageable;
 import com.droidwars.game.objects.AbstractGameObject;
 import com.droidwars.game.weaponry.Weapon;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,45 +20,46 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Абстрактный корабль
+ * Abstract ship
  */
 @Getter
 @Setter(AccessLevel.PROTECTED)
-public class Ship extends AbstractGameObject implements Manageable<Ship> {
+public abstract class Ship extends AbstractGameObject implements Manageable<Ship> {
 
     /**
-     * Скорость поворота вокруг центральной оси - градусов в секунду
+     * Rotation rate around ship central axis - grads per second
      */
     private float turnSpeed = 10.0f;
 
     /**
-     * Ускорение в боковом направлении - м / с^2 <br/>
-     * Вектор ускорения применяется в направлении, перпендикулярном {@link AbstractGameObject#facing}
+     * Acceleration in strafe direction - m / s^2 <br/>
+     * Acceleration vector is applied in perpendicular to {@link AbstractGameObject#facing} direction
      */
     private float strafe = 5.0f;
 
     /**
-     * Текущие единицы прочности корпуса корабля
+     * Current ship hull points
      */
-    private float hullPoints = 100;
+    private float hullPoints;
 
     /**
-     * Максимальные единицы прочности корпуса корабля
+     * Maximum ship hull points
      */
     private float maxHullPoints = 100;
 
     /**
-     * Номер игровой команды, которой принадлежит данный корабль. Используется для определения свой-чужой и для отрисовки кораблей разных цветов
+     * Team number. Used for friend or foe identification and ship coloring
      */
-    private int teamNumber = 0;
+    private int teamNumber;
 
     /**
-     * Список оружейных слотов
+     * Weapon slots list
      */
-    private List<Weapon> weaponSlots = ImmutableList.of();
+    @Setter(AccessLevel.NONE)
+    private List<Weapon> weaponSlots = Lists.newArrayList();
 
     /**
-     * Исполнитель команд корабля
+     * Ship commands executor
      */
     @Setter(AccessLevel.NONE)
     private CommandExecutor<Ship> commandExecutor = new CommandExecutorImpl<>(this);
@@ -61,7 +67,26 @@ public class Ship extends AbstractGameObject implements Manageable<Ship> {
     public Ship(GameInstance gameInstance, Vector2 position, Vector2 facing, int teamNumber) {
         super(gameInstance, position, facing);
 
+        this.hullPoints = this.maxHullPoints;
         this.teamNumber = teamNumber;
+    }
+
+    protected final void setMaxHullPoints(float maxHullPoints) {
+        this.maxHullPoints = maxHullPoints;
+        this.hullPoints = maxHullPoints;
+    }
+
+    public List<Weapon> getWeaponSlots() {
+        return ImmutableList.copyOf(weaponSlots);
+    }
+
+    protected final void setWeaponSlots(int number) {
+        //TODO use fixedSize list
+    }
+
+    protected final void putWeapon(Weapon weapon, int slotNumber) {
+        // TODO respect weaponSlotsSize
+        weaponSlots.add(slotNumber, weapon);
     }
 
     @Override

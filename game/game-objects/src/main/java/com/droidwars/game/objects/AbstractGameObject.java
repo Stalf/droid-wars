@@ -2,10 +2,14 @@ package com.droidwars.game.objects;
 
 import com.badlogic.gdx.math.Vector2;
 import com.droidwars.game.GameInstance;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
- * Абстрактный объект игрового мира
+ * Abstract game object
  */
 @EqualsAndHashCode(of = "gameId")
 @ToString
@@ -13,64 +17,64 @@ import lombok.*;
 @Setter(AccessLevel.PROTECTED)
 public abstract class AbstractGameObject implements GameObject {
     /**
-     * Время жизни
+     * Time that object was (or is) alive in game
      */
     private float aliveTime = 0.0f;
 
     /**
-     * Пройденное расстояние
+     * Distance travelled by the object
      */
     private float travelDistance = 0.0f;
 
     /**
-     * Координаты центра объекта
+     * Coordinates of the object's logical center
      */
     private Vector2 position = new Vector2();
 
     /**
-     * Направление, в котором повернут объект
+     * Direction in which the object is faced
      */
     private Vector2 facing = new Vector2();
 
     /**
-     * Скорость - м / с
+     * Velocity in m/s
      */
     private Vector2 velocity = new Vector2();
 
     /**
-     * Ускорение - м / с^2; <br/>
-     * Вектор ускорения применяется в направлении {@link AbstractGameObject#facing}
+     * Acceleration - m / s^2; <br/>
+     * Acceleration vector is applied in {@link AbstractGameObject#facing} direction
      */
-    private float acceleration = 10.0f;
+    private float acceleration = 0.0f;
 
     /**
-     * Ширина объекта в метрах (отсчитывается по оси X)
+     * Object width in meters (counted by X axis)
      */
-    private int width = 50;
+    private int width = 0;
 
     /**
-     * Высота объекта в метрах (отсчитывается по оси Y)
+     * Object height in meters (counted by Y axis)
      */
-    private int height = 50;
+    private int height = 0;
 
     /**
-     * Признак существования объекта в игровом мире
+     * Property stating if object is alive or not
      */
     @Setter(AccessLevel.NONE)
     private boolean alive = true;
 
     /**
-     * Внутрениий игровой идентификатор объекта
+     * Ingame object identifier
      */
     private long gameId = 0;
 
     /**
-     * Ссылка на контроллер боя
+     * Reference to a game instance controller
      */
     private GameInstance gameInstance;
 
     /**
-     * Время, прошедшее с предыдущего такта. Значение параметра обновляется на каждом такте
+     * Game time since last tick. This value is updated in every tick
      */
     protected float delta = 0f;
 
@@ -80,7 +84,6 @@ public abstract class AbstractGameObject implements GameObject {
 
         this.position.set(position);
         this.facing.set(facing.nor());
-
     }
 
     @Override
@@ -93,9 +96,10 @@ public abstract class AbstractGameObject implements GameObject {
 
         this.aliveTime += delta;
 
-        // Изменяем положение под воздействием скорости
-        this.position.add(velocity.x * delta, velocity.y * delta);
-        this.travelDistance += velocity.len() * delta;
+        // Change position regarding the velocity
+        Vector2 deltaVector = new Vector2(velocity.x * delta, velocity.y * delta);
+        this.position.add(deltaVector);
+        this.travelDistance += deltaVector.len();
 
     }
 

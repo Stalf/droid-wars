@@ -9,33 +9,33 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Абстрактный класс снаряда, который может наносить урон
+ * Abstract class for projectile that can cause damage
  */
-public class Projectile extends AbstractGameObject {
+public abstract class Projectile extends AbstractGameObject {
 
     /**
-     * Величина наносимого урона
+     * Damage value
      */
     @Getter
     @Setter(AccessLevel.PROTECTED)
     private float damage = 0;
 
     /**
-     * Максимальное время жизни снаряда (0 - не ограничено)
+     * Maximum projectile life time (0 - unlimited)
      */
     @Getter
     @Setter(AccessLevel.PROTECTED)
     private float maxAliveTime = 0;
 
     /**
-     * Максимальная дальность (0 - не ограничена)
+     * Maximum projectile travel distance (0 - unlimited)
      */
     @Getter
     @Setter(AccessLevel.PROTECTED)
     private float maxDistance = 0;
 
     /**
-     * Корабль, который произвел выстрел
+     * Ship object, that fired this projectile
      */
     @Getter(AccessLevel.PACKAGE)
     @Setter(AccessLevel.PROTECTED)
@@ -53,10 +53,10 @@ public class Projectile extends AbstractGameObject {
 
         super.update(delta);
 
-        // Увеличиваем скорость
+        // Increase velocity
         this.getVelocity().add(getFacing().x * getAcceleration() * delta, getFacing().y * getAcceleration() * delta);
 
-        // Проверяем условия дальности и длительности полета
+        // Check distance and time to live conditions
         if ((this.maxAliveTime > 0) && (this.getAliveTime() > this.maxAliveTime)) {
             this.destroy();
         }

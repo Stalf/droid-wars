@@ -7,7 +7,12 @@ import com.droidwars.game.command.ship.TurnDirectionCommand;
 import com.droidwars.game.exceptions.GameException;
 import com.droidwars.game.generator.IdGenerator;
 import com.droidwars.game.objects.ships.Ship;
-import com.droidwars.game.record.*;
+import com.droidwars.game.objects.ships.TestShip;
+import com.droidwars.game.record.BattleRecordMetadata;
+import com.droidwars.game.record.RecordReader;
+import com.droidwars.game.record.RecordStorage;
+import com.droidwars.game.record.RecordWriter;
+import com.droidwars.game.record.StepRecord;
 import com.google.common.collect.Lists;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -39,7 +44,7 @@ public class POJORecorderImplTest {
         when(idGeneratorMock.getNextId()).thenReturn(100L);
         when(gameInstanceMock.getRecordWriter()).thenReturn(recordWriter);
 
-        ship = new Ship(gameInstanceMock, new Vector2(0, 0), new Vector2(1, 0), 1);
+        ship = new TestShip(gameInstanceMock, new Vector2(0, 0), new Vector2(1, 0), 1);
 
         mockRecordStorage = mock(RecordStorage.class);
         BattleRecordMetadata mockRecordMetadata = mock(BattleRecordMetadata.class);

@@ -13,7 +13,13 @@ import org.testng.annotations.Test;
 import java.lang.reflect.Field;
 
 import static com.droidwars.game.TestConstants.DELTA_STEP;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyFloat;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @Slf4j
 public class ShipTest extends AbstractGameInstanceTest {
@@ -22,11 +28,11 @@ public class ShipTest extends AbstractGameInstanceTest {
 
     @BeforeMethod
     public void setupTest() {
-        ship = spy(new Ship(gameInstanceMock, new Vector2(0,0), new Vector2(1,0), 1));
+        ship = spy(new TestShip(gameInstanceMock, new Vector2(0, 0), new Vector2(1, 0), 1));
     }
 
     @Test
-    public void shipShouldDestroyWhenHullPointsLessThenZero() {
+    public void shouldBeDestroyedWhenHullPointsAreLessThenZero() {
 
         ship.applyDamage(40);
         ship.update(DELTA_STEP);
@@ -40,11 +46,10 @@ public class ShipTest extends AbstractGameInstanceTest {
         verify(ship, atLeast(1)).destroy();
 
         Assert.assertEquals(ship.getHullPoints(), 0, TestConstants.EPSILON);
-
     }
 
     @Test
-    public void shipShouldNotExecuteCommandsAfterDestroy() throws NoSuchFieldException, IllegalAccessException {
+    public void shouldNotExecuteCommandsAfterDestroyed() throws NoSuchFieldException, IllegalAccessException {
 
         CommandExecutorImpl<Ship> commandExecutor = new CommandExecutorImpl<>(ship);
 
@@ -73,8 +78,6 @@ public class ShipTest extends AbstractGameInstanceTest {
 
         verify(command1, times(1)).execute(any(Ship.class), anyFloat());
         verify(command2, never()).execute(any(Ship.class), anyFloat());
-
-
     }
 
 }

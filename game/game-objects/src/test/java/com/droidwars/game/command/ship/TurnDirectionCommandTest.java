@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.droidwars.game.AbstractGameInstanceTest;
 import com.droidwars.game.TestConstants;
 import com.droidwars.game.objects.ships.Ship;
+import com.droidwars.game.objects.ships.TestShip;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -15,16 +16,16 @@ public class TurnDirectionCommandTest extends AbstractGameInstanceTest {
 
     @BeforeMethod
     public void setupTest() {
-        ship = new Ship(gameInstanceMock, new Vector2(0,0), new Vector2(1,0), 1);
+        ship = new TestShip(gameInstanceMock, new Vector2(0, 0), new Vector2(1, 0), 1);
     }
 
     @DataProvider
     public Object[][] getData() {
         return new Object[][]{
-                {1, new Vector2(0, 1), 9},
-                {-1, new Vector2(0, -1), 9},
-                {1, new Vector2(-1, 0), 18},
-                {-1, new Vector2(-1, 0), 18}
+            {-1, new Vector2(0, 1), 9},
+            {1, new Vector2(0, -1), 9},
+            {-1, new Vector2(-1, 0), 18},
+            {1, new Vector2(-1, 0), 18}
         };
     }
 
@@ -45,5 +46,11 @@ public class TurnDirectionCommandTest extends AbstractGameInstanceTest {
         Assert.assertEquals(ship.getFacing().x, result.x, TestConstants.EPSILON);
         Assert.assertEquals(ship.getFacing().y, result.y, TestConstants.EPSILON);
     }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void shouldThrowExceptionOnIncorrectDirection() {
+        new TurnDirectionCommand(5);
+    }
+
 
 }

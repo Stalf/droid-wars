@@ -5,23 +5,32 @@ import com.droidwars.game.command.CommandType;
 import com.droidwars.game.objects.ships.Ship;
 
 /**
- * Команда на поворот корабля
+ * Command to rotate a ship
  */
 public class TurnDirectionCommand implements Command<Ship> {
 
     private int direction;
 
     /**
-     * Поворачивает корабль в указанном направлении на максимально возможный за такт угол.
-     * @param direction направление поворота: 1 - против часовой стрелки; -1 - по часовой стрелке
+     * Rotates a ship in specified direction on a maximum possible per tick angle.
+     *
+     * @param direction of rotation:
+     *                  <ul>
+     *                  <li>-1 - counter clockwise</li>
+     *                  <li>0 - do not rotate</li>
+     *                  <li>1 - clockwise</li>
+     *                  </ul>
      */
     public TurnDirectionCommand(int direction) {
+        if (Math.abs(direction) > 1) {
+            throw new IllegalArgumentException("Only values [-1, 0, 1] are acceptable as a rotation direction");
+        }
         this.direction = direction;
     }
 
     @Override
     public void execute(Ship subject, float delta) {
-        subject.getFacing().rotate(direction * subject.getTurnSpeed() * delta).nor();
+        subject.getFacing().rotate(-direction * subject.getTurnSpeed() * delta).nor();
     }
 
     @Override
