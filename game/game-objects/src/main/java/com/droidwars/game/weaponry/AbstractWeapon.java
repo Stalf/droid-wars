@@ -25,8 +25,6 @@ public abstract class AbstractWeapon implements Weapon, GameObjectFactory {
     @Getter(AccessLevel.PROTECTED)
     private Ship ship;
 
-    public abstract Projectile shoot();
-
     /**
      * @return координаты начальной точки снаряда
      */

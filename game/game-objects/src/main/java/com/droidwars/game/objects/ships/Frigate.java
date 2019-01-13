@@ -13,7 +13,7 @@ public class Frigate extends Ship {
 
         setMaxHullPoints(MAX_FRIGATE_HULL_POINTS);
         setWeaponSlots(1);
-        putWeapon(new MissileLauncher(gameInstance), 1);
+        putWeapon(new MissileLauncher(gameInstance), 0);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class Frigate extends Ship {
     }
 
     @Override
-    public void shoot(int slot) {
+    public void shoot(int slotNumber) {
         this.shoot();
     }
 }

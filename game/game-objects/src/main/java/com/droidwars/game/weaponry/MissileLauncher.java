@@ -13,7 +13,7 @@ public class MissileLauncher extends AbstractWeapon {
     private static final float initialMissileVelocity = 150;
     private static final float missileDamage = 100;
     private static final float missileMaxDistance = 700;
-    public static final int missile_acceleration = 10;
+    private static final int missile_acceleration = 10;
 
     public MissileLauncher(GameInstance gameInstance) {
         super(gameInstance);
@@ -22,9 +22,12 @@ public class MissileLauncher extends AbstractWeapon {
     @Override
     public Projectile shoot() {
 
-        Vector2 missileVelocity = new Vector2(getShip().getFacing()).scl(initialMissileVelocity).add(getShip().getVelocity());
+        Vector2 missileVelocity = new Vector2(
+            getShip().getFacing()).scl(initialMissileVelocity).add(getShip().getVelocity());
 
-        return new Missile(getGameInstance(), getShootingPosition(), getShip().getFacing(), missileVelocity, missileDamage, missileMaxDistance, missile_acceleration);
+        return new Missile(getGameInstance(), getShootingPosition(),
+            getShip().getFacing(), missileVelocity,
+            missileDamage, missileMaxDistance, missile_acceleration);
     }
 
     @Override

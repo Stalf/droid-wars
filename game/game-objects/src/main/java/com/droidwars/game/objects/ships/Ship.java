@@ -9,13 +9,15 @@ import com.droidwars.game.command.CommandExecutorImpl;
 import com.droidwars.game.command.CommandType;
 import com.droidwars.game.command.Manageable;
 import com.droidwars.game.objects.AbstractGameObject;
+import com.droidwars.game.weaponry.StubWeapon;
 import com.droidwars.game.weaponry.Weapon;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +26,7 @@ import java.util.Map;
  */
 @Getter
 @Setter(AccessLevel.PROTECTED)
+@EqualsAndHashCode(callSuper = true)
 public abstract class Ship extends AbstractGameObject implements Manageable<Ship> {
 
     /**
@@ -56,7 +59,7 @@ public abstract class Ship extends AbstractGameObject implements Manageable<Ship
      * Weapon slots list
      */
     @Setter(AccessLevel.NONE)
-    private List<Weapon> weaponSlots = Lists.newArrayList();
+    private Weapon[] weaponSlots = {};
 
     /**
      * Ship commands executor
@@ -81,12 +84,16 @@ public abstract class Ship extends AbstractGameObject implements Manageable<Ship
     }
 
     protected final void setWeaponSlots(int number) {
-        //TODO use fixedSize list
+        this.weaponSlots = new Weapon[number];
+        Arrays.setAll(this.weaponSlots, index -> new StubWeapon(getGameInstance()));
     }
 
     protected final void putWeapon(Weapon weapon, int slotNumber) {
-        // TODO respect weaponSlotsSize
-        weaponSlots.add(slotNumber, weapon);
+        if (slotNumber < 0 || slotNumber >= weaponSlots.length) {
+            throw new IllegalArgumentException("Illegal weapon slot number '" + slotNumber
+                + "', ship has only " + weaponSlots.length + " slots");
+        }
+        weaponSlots[slotNumber] = weapon;
     }
 
     @Override
@@ -112,13 +119,13 @@ public abstract class Ship extends AbstractGameObject implements Manageable<Ship
     /**
      * Выполняет выстрел
      *
-     * @param slot номер орудийного слота
+     * @param slotNumber номер орудийного слота
      */
-    public void shoot(int slot) {
-        if (weaponSlots.size() < slot) {
-            weaponSlots.get(slot).shoot();
+    public void shoot(int slotNumber) {
+        if (slotNumber >= 0 && weaponSlots.length > slotNumber) {
+            weaponSlots[slotNumber].shoot();
         } else {
-            throw new IllegalArgumentException("Неверный номер оружейного слота");
+            throw new IllegalArgumentException("Wrong weapon slot number");
         }
     }
 
