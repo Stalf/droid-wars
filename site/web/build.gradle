@@ -28,6 +28,9 @@ processResources {
 }
 
 bootRun {
+    // Execute liquibase update before running
+    dependsOn ':site:core:update'
+    
     // Watch static resource changes
     addResources = true
 }
